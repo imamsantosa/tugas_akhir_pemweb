@@ -17,7 +17,7 @@ class CreateTables extends Migration
             $table->string('username');
             $table->string('email');
             $table->string('password');
-            $table->string('remember_token');
+            $table->rememberToken();
             $table->timestamps();
         });
 
@@ -29,7 +29,7 @@ class CreateTables extends Migration
             $table->string('full_name');
             $table->date('birthdate');
             $table->string('status_message');
-            $table->string('remember_token');
+            $table->rememberToken();
             $table->timestamps();
         });
 
@@ -80,7 +80,7 @@ class CreateTables extends Migration
             $table->integer('post_id')->unsigned();
             $table->integer('reporter_id')->unsigned();
             $table->string('reason');
-            $table->string('status');
+            $table->boolean('status')->default(false);
             $table->timestamps();
 
             $table->foreign('post_id')

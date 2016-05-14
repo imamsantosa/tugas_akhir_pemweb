@@ -3,26 +3,40 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App/Comment;
+use App/User;
 
 class Post extends Model
 {
 
     protected $table = "posts";
 
+    protected $fillable = [
+        'user_id',
+        'caption'
+    ];
+
     public function user() {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo(User::class);
     }
 
-    public function comments() {
-        return $this->hasMany('App\Comment');
+    public function countComment()
+    {
+        return Comment::where('post_id', $this->id)->count();
     }
 
-    public function likes() {
-        return $this->hasMany('App\Like');
-    }
+    public function recentComment()
+    {
+    	$comments = Comment::where('post_id', $this->id)
+    				->skip($this->countComment() - 4)
+    				->get();
+    	$recent = $comments->map(function($comment){
+    		'username' => $comment->user->username,
+            'full_name' => $comment->user->fullname,
+            'comment' => $comment->comment
+    	});
 
-    public function reports() {
-        return $this->hasMany('App\Report');
+    	return $recent;
     }
 
 }
