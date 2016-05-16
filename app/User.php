@@ -12,7 +12,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'username', 'full_name', 'email', 'password', 'birthdate', 'status_message'
+        'username', 'full_name', 'email', 'password', 'birthdate', 'status_message', 'token_auth'
     ];
 
     /**
@@ -23,5 +23,10 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
-
+    
+    public function generateToken()
+    {
+        $this->token_auth = str_random(16);
+        $this->save();
+    }
 }

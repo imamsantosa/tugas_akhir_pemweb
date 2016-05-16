@@ -12,15 +12,6 @@ class CreateTables extends Migration
      */
     public function up()
     {
-        Schema::create('admins', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('username');
-            $table->string('email');
-            $table->string('password');
-            $table->rememberToken();
-            $table->timestamps();
-        });
-
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('username');
@@ -29,7 +20,9 @@ class CreateTables extends Migration
             $table->string('full_name');
             $table->date('birthdate');
             $table->string('status_message');
+            $table->boolean('is_admin')->default(false);
             $table->rememberToken();
+            $table->string('token_auth');
             $table->timestamps();
         });
 
