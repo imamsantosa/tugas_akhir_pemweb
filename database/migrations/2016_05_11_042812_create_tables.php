@@ -19,7 +19,7 @@ class CreateTables extends Migration
             $table->string('password');
             $table->string('full_name');
             $table->date('birthdate');
-            $table->string('status_message');
+            $table->string('status_message')->default('newbe');
             $table->boolean('is_admin')->default(false);
             $table->rememberToken();
             $table->string('token_auth');

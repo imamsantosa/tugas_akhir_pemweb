@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\UserApiControllers;
+namespace App\Http\Controllers\UserApi;
 
 use App\Repositories\UserApi\PostRepository;
 
@@ -33,4 +33,13 @@ class PostController extends BaseController
         return $this->respondSuccess($this->repository->update());
     }
 
+    public function like()
+    {
+        return $this->respond($this->repository->like());
+    }
+
+    public function unlike()
+    {
+        return $this->respond($this->repository->unlike());
+    }
 }

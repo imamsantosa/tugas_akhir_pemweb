@@ -17,33 +17,22 @@ Route::get('/', function () {
 
 Route::group(['prefix' => 'api/v1'], function() {
 
-    Route::post('register', ['uses' => 'UserController@register', 'as'=>'register']);
-    Route::post('login', ['uses' => 'UserController@login', 'as'=>'login']);
+    Route::post('register', ['uses' => 'AuthController@register', 'as'=>'register']);
+    Route::post('login', ['uses' => 'AuthController@login', 'as'=>'login']);
 
     Route::group(['prefix' => 'secure', 'middleware' => 'auth'], function(){
-        Route::group(['prefix' => 'user'], function() {
-            Route::get('/', 'UserController@index');
-            Route::get('view/{id}', 'UserController@view');
-            Route::post('update/{id}', 'UserController@update');
-            Route::get('delete/{id}', 'UserController@delete');
+        
+        Route::group(['prefix' => 'user', 'namespace' => 'UserApi', 'middleware' => 'status', 'admin' => false], function() {
+            //implement route for user
+
+            Route::post('like', ['uses' => 'PostController@like', 'as' => 'like']);
+            Route::post('unlike', ['uses' => 'PostController@unlike', 'as' => 'unlike']);
+
         });
 
-        Route::group(['prefix' => 'post'], function() {
-            Route::get('/', 'PostController@index');
-            Route::post('create', 'PostController@create');
-            Route::get('view/{id}', 'PostController@view');
-            Route::post('update/{id}', 'PostController@update');
-            Route::get('delete/{id}', 'PostController@delete');
+        Route::group(['prefix' => 'admin', 'namespace' => 'AdminApi', 'middleware' => 'status', 'admin' => true], function(){
+            //implement route for admin
         });
 
-        Route::group(['prefix' => 'comment'], function() {
-            Route::get('/', 'CommentController@index');
-            Route::get('view/{id}', 'CommentController@view');
-            Route::post('create', 'CommentController@create');
-            Route::post('update/{id}', 'CommentController@update');
-            Route::get('delete/{id}', 'CommentController@delete');
-        });
     });
-
-
 });

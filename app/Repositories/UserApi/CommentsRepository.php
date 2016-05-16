@@ -35,18 +35,20 @@ class CommentRepository {
         return "Sukses menghapus komentar";
     }
 
-    public function list() 
+    public function list_post()
     {
         $result = $this->comment
                         ->where('post_id', $this->request->input('post_id'))
-                        =>get();
+                        ->get();
 
         $response = [];
         $response['data'] = $result->map(function($comment){
-            'username' => $comment->user->username,
-            'full_name' => $comment->user->fullname,
-            'comment' => $comment->comment
-        })
+            return [
+                'username' => $comment->user->username,
+                'full_name' => $comment->user->fullname,
+                'comment' => $comment->comment
+            ];
+        });
 
         return $response;
     }

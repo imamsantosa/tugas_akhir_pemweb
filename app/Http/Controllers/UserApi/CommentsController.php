@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\UserApiControllers;
+namespace App\Http\Controllers\UserApi;
 
 use App\Repositories\UserApi\CommentsRepository;
 
@@ -23,9 +23,9 @@ class CommentsController extends BaseController
         return $this->respondSuccess($this->repository->delete());
     }
 
-    public function list()
+    public function list_post()
     {
-        return $this->respond($this->repository->list());
+        return $this->respond($this->repository->list_post());
     }
 
 }

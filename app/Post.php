@@ -3,8 +3,8 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use App/Comment;
-use App/User;
+use App\Comment;
+use App\User;
 
 class Post extends Model
 {
@@ -37,6 +37,11 @@ class Post extends Model
     	});
 
     	return $recent;
+    }
+
+    public function like_count()
+    {
+        return Like::where('post_id', $this->id)->count();
     }
 
 }
