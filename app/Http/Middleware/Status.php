@@ -15,10 +15,10 @@ class Status
     {
         $admin = $this->isAdmin($request->route());
         $is_Admin = auth()->user()->is_admin;
-
-        if (!($is_Admin && $admin))
+        if ($admin)
         {
-            return response()->json(['error' => true, 'message'=>'you not admin']);
+            if(!$is_Admin)
+                return response()->json(['error' => true, 'message'=>'you not admin']);
         }
 
         return $next($request);

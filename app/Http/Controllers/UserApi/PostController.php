@@ -12,27 +12,7 @@ class PostController extends BaseController
     {
         $this->repository = $repo;
     }
-
-    public function create()
-    {
-        return $this->respondSuccess($this->repository->create());
-    }
-
-    public function delete()
-    {
-        return $this->respondSuccess($this->repository->delete());
-    }
-
-    public function list()
-    {
-        return $this->respond($this->repository->list());
-    }
-
-    public function update()
-    {
-        return $this->respondSuccess($this->repository->update());
-    }
-
+    
     public function like()
     {
         return $this->respond($this->repository->like());

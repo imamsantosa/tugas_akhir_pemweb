@@ -28,8 +28,8 @@ Route::group(['prefix' => 'api', 'middleware' => 'auth'], function() {
 
         Route::group(['prefix' => 'user', 'namespace' => 'UserApi', 'middleware' => 'status', 'admin' => false], function() {
             //implement route for user
-            Route::post('like', ['uses' => 'PostController@like', 'as' => 'like']);
-            Route::post('unlike', ['uses' => 'PostController@unlike', 'as' => 'unlike']);
+            Route::post('like', ['uses' => 'PostController@like', 'as' => 'api-user-like']);
+            Route::post('unlike', ['uses' => 'PostController@unlike', 'as' => 'api-user-unlike']);
             Route::post('addComment', ['uses' => 'postController@addComment', 'as' => 'addComment']);
         });
 

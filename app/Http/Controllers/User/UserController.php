@@ -21,6 +21,7 @@ class UserController extends Controller
 
         $result = Post::where('user_id', auth()->user()->id)
             ->orWhereIn('user_id', $friend)
+            ->orderBy('id', 'desc')
             ->get();
 
         $posts= $result->map(function($post){
@@ -33,7 +34,9 @@ class UserController extends Controller
                 'isLiked' => $post->isLiked(),
                 'likeCount' => $post->likeCount(),
                 'commentCount' => $post->commentCount(),
-                'comments' => [$post->comments()]
+                'created_at' => $post->created_at(),
+                'datetime' => $post->created_at->toDateTimeString(),
+                'comments' => $post->comments()
             ];
         });
 
