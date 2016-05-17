@@ -20,28 +20,35 @@ class Post extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function countComment()
+    public function commentCount()
     {
         return Comment::where('post_id', $this->id)->count();
     }
 
-    public function recentComment()
+    public function Comments()
     {
     	$comments = Comment::where('post_id', $this->id)
-    				->skip($this->countComment() - 4)
     				->get();
+
     	$recent = $comments->map(function($comment){
-    		'username' => $comment->user->username,
-            'full_name' => $comment->user->fullname,
-            'comment' => $comment->comment
+            return [
+                'username' => $comment->user->username,
+                'full_name' => $comment->user->fullname,
+                'comment' => $comment->comment
+            ];
     	});
 
     	return $recent;
     }
 
-    public function like_count()
+    public function likeCount()
     {
         return Like::where('post_id', $this->id)->count();
+    }
+
+    public function isLiked()
+    {
+        return Like::where('post_id', $this->id)->where('user_id', auth()->user()->id)->count() >= 1;
     }
 
 }

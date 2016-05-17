@@ -18,11 +18,11 @@ class CreateTables extends Migration
             $table->string('email');
             $table->string('password');
             $table->string('full_name');
+            $table->string('avatar')->default('default.jpg');
             $table->date('birthdate');
-            $table->string('status_message')->default('newbe');
+            $table->string('status_message')->default('Hi, I am newbe in here');
             $table->boolean('is_admin')->default(false);
             $table->rememberToken();
-            $table->string('token_auth');
             $table->timestamps();
         });
 
