@@ -27,12 +27,12 @@ class UploadController extends Controller
 
     public function upload(Request $request)
     {
-        if (!$request->hasFile('image')) return redirect()->route('upload_image')->with(['error' => 'danger','title' => 'Whoops!!', 'message'=>'Failed to upload. Please Try Again']);
+        if (!$request->hasFile('image')) return redirect()->route('user-upload_image')->with(['error' => 'danger','title' => 'Whoops!!', 'message'=>'Failed to upload. Please Try Again']);
 
         $dest = public_path() . '/images/';
         $file = $request->file('image');
 
-        if(!substr($file->getMimeType(), 0, 5) == 'image') return redirect()->route('upload_image')->with(['error' => 'danger','title' => 'Whoops!!', 'message'=>'Failed to upload. Please Try Again']);
+        if(!substr($file->getMimeType(), 0, 5) == 'image') return redirect()->route('user-upload_image')->with(['error' => 'danger','title' => 'Whoops!!', 'message'=>'Failed to upload. Please Try Again']);
 
         $newPost = $this->post->create([
             'user_id' => auth()->user()->id,
@@ -41,6 +41,6 @@ class UploadController extends Controller
 
         $file->move($dest, $newPost->id.'.jpg');
 
-        return redirect()->route('home');
+        return redirect()->route('user-home');
     }
 }

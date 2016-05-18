@@ -15,7 +15,7 @@
         <div class="panel-body">
             <div class="row-center">
                 <div class="col-md-12">
-                    <form class="form-horizontal" action="{{route('upload_proses')}}" method="POST" enctype="multipart/form-data">
+                    <form class="form-horizontal" action="{{route('user-upload_proses')}}" method="POST" enctype="multipart/form-data">
                         <div class="form-group">
                             <div class="col-sm-12">
                                 <input type="file" name="image" id="image" required="required" >

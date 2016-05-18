@@ -1,6 +1,13 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: imamsantosa
+ * Date: 5/18/16
+ * Time: 16:47
+ */
 
 namespace App\Http\Controllers\UserApi;
+
 
 use App\Repositories\UserApi\PostRepository;
 
@@ -12,14 +19,9 @@ class PostController extends BaseController
     {
         $this->repository = $repo;
     }
-    
-    public function like()
-    {
-        return $this->respond($this->repository->like());
-    }
 
-    public function unlike()
+    public function delete()
     {
-        return $this->respond($this->repository->unlike());
+        return $this->respond($this->repository->delete());
     }
 }

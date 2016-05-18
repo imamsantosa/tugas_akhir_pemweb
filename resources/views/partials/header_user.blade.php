@@ -9,7 +9,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="{{route('home')}}">RailPicture.com</a>
+                <a class="navbar-brand" href="{{route('user-home')}}">RailPicture.com</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -20,8 +20,8 @@
                     <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
                 </form>
                 <ul class="nav navbar-nav navbar-right">
-                    <li ><a href="{{route('home')}}">Home <span class="sr-only"></span></a></li>
-                    <li ><a href="{{route('upload_image')}}">upload <span class="sr-only"></span></a></li>
+                    <li ><a href="{{route('user-home')}}">Home <span class="sr-only"></span></a></li>
+                    <li ><a href="{{route('user-upload_image')}}">upload <span class="sr-only"></span></a></li>
                     <li ><a href="">Message <span class="sr-only"></span></a></li>
 
                     <li class="dropdown">
@@ -30,7 +30,7 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a href=""><span class="glyphicon glyphicon-user"></span>  Profile</a></li>
-                            <li><a href=""><span class="glyphicon glyphicon-cog"></span>  Setting Account</a></li>
+                            <li><a href="{{route('user-profile-edit')}}"><span class="glyphicon glyphicon-cog"></span>  Setting Account</a></li>
                             <li role="separator" class="divider"></li>
                             <li><a href="{{route('auth_logout')}}"><span class="glyphicon glyphicon-off"></span>  Logout</a></li>
                         </ul>

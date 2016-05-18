@@ -14,7 +14,7 @@
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="{{route('home')}}">RailPicture.com</a>
+            <a class="navbar-brand" href="{{route('user-home')}}">RailPicture.com</a>
         </div>
     </div><!-- /.container-fluid -->
 </nav>

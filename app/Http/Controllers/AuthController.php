@@ -39,7 +39,7 @@ class AuthController extends Controller {
             'password' => $request->input('password')
         ];
 
-        if(auth()->attempt($auth)) return redirect()->route('home');
+        if(auth()->attempt($auth)) return redirect()->route('user-home');
 
         return redirect()->route('login')
             ->with([

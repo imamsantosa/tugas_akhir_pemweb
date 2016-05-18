@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable
 {
@@ -25,10 +26,14 @@ class User extends Authenticatable
     ];
 
     protected $dates = ['created_at', 'updated_at'];
-    
-    public function generateToken()
+
+    public function changePassword($newpassword)
     {
-        $this->token_auth = str_random(16);
+        $this->password = bcrypt($newpassword);
         $this->save();
+    }
+
+    public function comparePassword($password){
+        return Hash::check($password, $this->password);
     }
 }
