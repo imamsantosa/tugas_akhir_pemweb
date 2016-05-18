@@ -25,7 +25,9 @@
                     <li ><a href="">Message <span class="sr-only"></span></a></li>
 
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="padding-top: 12px"> <img src="assets/arno.jpg" class="img-rounded" style="width: 36px; height:26px;"> Kevin Charlie <span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="padding-top: 12px">
+                            <img src="{{url('avatars/'.auth()->user()->avatar)}}" class="img-rounded" style="width: 36px; height:26px;"> {{auth()->user()->full_name}} <span class="caret"></span>
+                        </a>
                         <ul class="dropdown-menu">
                             <li><a href=""><span class="glyphicon glyphicon-user"></span>  Profile</a></li>
                             <li><a href=""><span class="glyphicon glyphicon-cog"></span>  Setting Account</a></li>
