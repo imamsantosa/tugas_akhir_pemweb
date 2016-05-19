@@ -41,15 +41,12 @@
                 <div class="col-md-3 col-xs-3">
                     <a role="button" id="button-follower" class="btn btn-primary btn-follow btn-block">{{ $follower_count }} Follower</a>
                 </div>
-                @if(!$is_followed)
-                    <div class="col-md-3 col-xs-3">
-                        <a role="button" id="button-foll-unfoll" data-idUser="{{ $user_data->id }}" class="btn btn-primary btn-follow btn-block" onclick="followUnfollowUser()">Follow</a>
-                    </div>
-                @else
-                    <div class="col-md-3 col-xs-3">
-                        <a role="button" id="button-foll-unfoll" data-idUser="{{ $user_data->id }}" class="btn btn-primary btn-follow btn-block" onclick="followUnfollowUser()">Unfollow</a>
-                    </div>
-                @endif
+                <div class="col-md-3 col-xs-3">
+                    <a role="button" id="button-follow" style="{{ (!$is_followed) ? '' : 'display: none;' }}" data-idUser="{{ $user_data->id }}" class="btn btn-primary btn-follow btn-block" onclick="followUser()">Follow</a>
+                </div>
+                <div class="col-md-3 col-xs-3">
+                    <a role="button" id="button-unfollow" style="{{ ($is_followed) ? '' : 'display: none;' }}" data-idUser="{{ $user_data->id }}" class="btn btn-primary btn-follow btn-block" onclick="unfollowUser()">Unfollow</a>
+                </div>
             </div>
         </div>
     </div>
@@ -59,42 +56,38 @@
 @section('footer-additional')
     <script>
 
-        function followUnfollowUser() {
-            var inc = 0;
-            if ($("#button-foll-unfoll").text() == "Follow") {
-                $.ajax({
-                    method: 'POST',
-                    url: "{{ route('api-user-follow') }}",
-                    data: "friend_id="+$("#button-foll-unfoll").attr("data-idUser")
-                })
-                .done(function (msg) {
-                    var res = msg;
-                    if (!res.error) {
-                        $("#button-foll-unfoll").text("Unfollow");
-                    }
-                });
+        function followUser() {
+            $.ajax({
+                method: 'POST',
+                url: "{{ route('api-user-follow') }}",
+                data: "friend_id=" + $("#button-follow").attr("data-idUser")
+            })
+            .done(function (msg) {
+                var resp = msg;
+                if (!resp.error) {
+                    $("#button-follow").hide();
+                    $("#button-unfollow").show();
+                    $("#button-follower").text(resp.follower_count);
+                    $("#button-following").text(resp.following_count);
+                }
+            });
+        }
 
-                inc = 1;
-            } else {
-                $.ajax({
-                    method: 'POST',
-                    url: "{{ route('api-user-unfollow') }}",
-                    data: "friend_id="+$("#button-foll-unfoll").attr("data-idUser")
-                })
-                .done(function (msg) {
-                    var res = msg;
-                    if (!res.error) {
-                        $("#button-foll-unfoll").text("Follow");
-                    }
-                });
-
-                inc = -1;
-            }
-
-            var btn_val = $("#button-follower").text();
-            var arr = btn_val.split(" ");
-
-            $("#button-follower").text( (parseInt(arr[0]) + inc) + " Follower" );
+        function unfollowUser() {
+            $.ajax({
+                method: 'POST',
+                url: "{{ route('api-user-unfollow') }}",
+                data: "friend_id=" + $("#button-follow").attr("data-idUser")
+            })
+            .done(function (msg) {
+                var resp = msg;
+                if (!resp.error) {
+                    $("#button-unfollow").hide();
+                    $("#button-follow").show();
+                    $("#button-follower").text(resp.follower_count);
+                    $("#button-following").text(resp.following_count);
+                }
+            });
         }
 
         $(document).ready(function(){

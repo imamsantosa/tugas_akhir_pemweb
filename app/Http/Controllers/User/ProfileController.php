@@ -9,16 +9,19 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Repositories\UserApi\FriendshipRepository;
 use Illuminate\Http\Request;
 use App\Repositories\User\ProfileRepository;
 
 class ProfileController extends Controller
 {
 
-    private $repository;
+    private $profileRepository, $friendshipRepository;
 
-    public function __construct(ProfileRepository $repository) {
-        $this->repository = $repository;
+    public function __construct(ProfileRepository $profileRepository, FriendshipRepository $friendshipRepository) {
+        $this->profileRepository = $profileRepository;
+        $this->friendshipRepository = $friendshipRepository;
+
     }
 
     public function index(Request $request, $username)
@@ -31,10 +34,10 @@ class ProfileController extends Controller
 
     private function self()
     {
-        $posts = $this->repository->posts(auth()->user());
-        $postCount = $this->repository->countPost(auth()->user());
-        $followerCount = $this->repository->countFollower(auth()->user());
-        $followingCount = $this->repository->countFollowing(auth()->user());
+        $posts = $this->profileRepository->posts(auth()->user());
+        $postCount = $this->profileRepository->countPost(auth()->user());
+        $followerCount = $this->friendshipRepository->countFollower(auth()->user()->id);
+        $followingCount = $this->friendshipRepository->countFollowing(auth()->user()->id);
 
         return View('user/profile_self', [
             'post_count' => $postCount,
@@ -46,12 +49,12 @@ class ProfileController extends Controller
 
     private function profile($username)
     {
-        $data = $this->repository->profile($username);
-        $isFollowed = $this->repository->isFollowed($username);
-        $postCount = $this->repository->countPost($data);
-        $followerCount = $this->repository->countFollower($data);
-        $followingCount = $this->repository->countFollowing($data);
-        $posts = $this->repository->posts(auth()->user());
+        $data = $this->profileRepository->profile($username);
+        $isFollowed = $this->profileRepository->isFollowed($username);
+        $postCount = $this->profileRepository->countPost($data);
+        $followerCount = $this->friendshipRepository->countFollower($data->id);
+        $followingCount = $this->friendshipRepository->countFollowing($data->id);
+        $posts = $this->profileRepository->posts(auth()->user());
 
         return View('user/profile_someone', [
             'user_data' => $data,

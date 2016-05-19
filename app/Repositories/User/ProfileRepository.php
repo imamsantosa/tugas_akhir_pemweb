@@ -21,14 +21,6 @@ class ProfileRepository {
         return Post::where('user_id', $user->id)->get()->count();
     }
 
-    public function countFollowing($user) {
-        return Friendship::where('user_id', $user->id)->get()->count();
-    }
-
-    public function countFollower($user) {
-        return Friendship::where('friend_id', $user->id)->get()->count();
-    }
-
     public function isFollowed($username) {
         $result = $this->profile($username);
         $criteria = [

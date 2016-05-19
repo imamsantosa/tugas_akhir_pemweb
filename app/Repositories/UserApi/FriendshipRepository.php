@@ -12,43 +12,79 @@ use Illuminate\Http\Request;
 
 class FriendshipRepository {
 
-    private $request;
+    private $request, $friendship;
 
-    public function __construct(Request $request) {
+    public function __construct(Request $request, Friendship $fr) {
         $this->request = $request;
+        $this->friendship = $fr;
+    }
+
+    public function countFollower($id) {
+        return $this->friendship->where('friend_id', $id)
+            ->get()
+            ->count();
+    }
+
+    public function countFollowing($id) {
+        return $this->friendship->where('user_id', $id)
+            ->get()
+            ->count();
     }
 
     public function follow() {
-        $findResult = Friendship::where([
+        $friendId = $this->request->input('friend_id');
+
+        $findResult = $this->friendship->where([
             'user_id' => auth()->user()->id,
-            'friend_id' => $this->request->input('friend_id')
+            'friend_id' => $friendId
         ])->first();
 
         if ($findResult == null) {
             $newFollow = new Friendship();
             $newFollow->user_id = auth()->user()->id;
-            $newFollow->friend_id = $this->request->input('friend_id');
+            $newFollow->friend_id = $friendId;
 
             $newFollow->save();
 
-            return ['error' => false, 'message' => 'berhasil follow'];
+            $strFollower = ($this->countFollower($friendId) <= 1) ? ' Follower' : ' Followers';
+
+            return [
+                'error' => false,
+                'message' => 'berhasil follow',
+                'follower_count' => $this->countFollower($friendId) . $strFollower,
+                'following_count' => $this->countFollowing($friendId) . " Following"
+            ];
         } else {
-            return ['error' => true, 'message' => 'gagal follow'];
+            return [
+                'error' => true,
+                'message' => 'gagal follow'
+            ];
         }
     }
 
     public function unfollow() {
-        $findResult = Friendship::where([
+        $friendId = $this->request->input('friend_id');
+
+        $findResult = $this->friendship->where([
             'user_id' => auth()->user()->id,
-            'friend_id' => $this->request->input('friend_id')
+            'friend_id' => $friendId
         ])->first();
 
         if ($findResult != null) {
             $findResult->delete();
+            $strFollower = ($this->countFollower($friendId) <= 1) ? ' Follower' : ' Followers';
 
-            return ['error' => false, 'message' => 'berhasil unfollow'];
+            return [
+                'error' => false,
+                'message' => 'berhasil follow',
+                'follower_count' => $this->countFollower($friendId) . $strFollower,
+                'following_count' => $this->countFollowing($friendId) . " Following"
+            ];
         } else {
-            return ['error' => true, 'message' => 'gagal unfollow'];
+            return [
+                'error' => true,
+                'message' => 'gagal unfollow'
+            ];
         }
     }
 
