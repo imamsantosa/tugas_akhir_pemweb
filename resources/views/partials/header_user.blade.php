@@ -21,16 +21,16 @@
                 </form>
                 <ul class="nav navbar-nav navbar-right">
                     <li ><a href="{{route('user-home')}}">Home <span class="sr-only"></span></a></li>
-                    <li ><a href="{{route('user-upload_image')}}">upload <span class="sr-only"></span></a></li>
-                    <li ><a href="">Message <span class="sr-only"></span></a></li>
+                    <li ><a href="{{route('user-upload_image')}}">Upload <span class="sr-only"></span></a></li>
+                    <li ><a href="">Messages <span class="sr-only"></span></a></li>
 
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="padding-top: 12px">
                             <img src="{{url('avatars/'.auth()->user()->avatar)}}" class="img-rounded" style="width: 36px; height:26px;"> {{auth()->user()->full_name}} <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href=""><span class="glyphicon glyphicon-user"></span>  Profile</a></li>
-                            <li><a href="{{route('user-profile-edit')}}"><span class="glyphicon glyphicon-cog"></span>  Setting Account</a></li>
+                            <li><a href={{ route('user-profile', ['username' => auth()->user()->username]) }}><span class="glyphicon glyphicon-user"></span>  Profile</a></li>
+                            <li><a href="{{route('user-profile-edit')}}"><span class="glyphicon glyphicon-cog"></span>  Account Setting</a></li>
                             <li role="separator" class="divider"></li>
                             <li><a href="{{route('auth_logout')}}"><span class="glyphicon glyphicon-off"></span>  Logout</a></li>
                         </ul>

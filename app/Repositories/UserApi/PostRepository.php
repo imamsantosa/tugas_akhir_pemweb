@@ -25,7 +25,8 @@ class PostRepository
 
     public function delete()
     {
-        $delete = $this->post->find($this->request->input('post_id'));
+        $delete = $this->post
+            ->find($this->request->input('post_id'));
 
         $delete->delete();
 

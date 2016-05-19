@@ -1,7 +1,7 @@
 @extends('layouts/user')
 
 @section('title')
-    Upload Image | RailPicture.id
+    {{ auth()->user()->full_name }} | RailPicture.id
 @endsection
 
 @section('content')
@@ -33,13 +33,13 @@
             </div>
             <div class="row" style="margin-top: 12px">
                 <div class="col-md-4 col-xs-4">
-                    <a role="button" class="btn btn-primary btn-follow btn-block">3 Posts</a>
+                    <a role="button" class="btn btn-primary btn-follow btn-block">{{ $post_count }} Posts</a>
                 </div>
                 <div class="col-md-4 col-xs-4">
-                    <a role="button" class="btn btn-primary btn-follow btn-block">4 Following</a>
+                    <a role="button" class="btn btn-primary btn-follow btn-block">{{ $following_count }} Following</a>
                 </div>
                 <div class="col-md-4 col-xs-4">
-                    <a role="button" class="btn btn-primary btn-follow btn-block">5 Follower</a>
+                    <a role="button" class="btn btn-primary btn-follow btn-block">{{ $follower_count }} Follower</a>
                 </div>
             </div>
         </div>
