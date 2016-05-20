@@ -20,15 +20,11 @@ class FriendshipRepository {
     }
 
     public function countFollower($id) {
-        return $this->friendship->where('friend_id', $id)
-            ->get()
-            ->count();
+        return $this->friendship->where('friend_id', $id)->count();
     }
 
     public function countFollowing($id) {
-        return $this->friendship->where('user_id', $id)
-            ->get()
-            ->count();
+        return $this->friendship->where('user_id', $id)->count();
     }
 
     public function follow() {
