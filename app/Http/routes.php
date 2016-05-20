@@ -23,7 +23,7 @@ Route::group(['middleware' => 'auth', 'namespace' => 'User'], function(){
     Route::get('u/{username}', ['uses' => 'ProfileController@index', 'as' => 'user-profile']);
     Route::get('/profile/edit', ['uses' => 'SettingProfileController@getProfile', 'as' => 'user-profile-edit']);
     Route::get('/profile/change-password', ['uses' => 'ProfileController@getPassword', 'as' => 'user-profile-edit-password']);
-
+    Route::get('conversations/{username}', ['uses' => 'MessageController@index', 'as' => 'user-conversations']);
 
     Route::get('upload', ['uses' => 'UploadController@index', 'as' => 'user-upload_image']);
     Route::post('upload', ['uses' => 'UploadController@upload', 'as' => 'user-upload_proses']);
