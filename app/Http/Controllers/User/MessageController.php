@@ -35,13 +35,20 @@ class MessageController extends Controller {
             return [
                 'message_id' => $message->id,
                 'sender_id' => $message->sender_id,
+                'sender_username' => User::find($message->sender_id)->username,
+                'sender_name' => User::find($message->sender_id)->full_name,
                 'recipient_id' => $message->recipient_id,
+                'recipient_username' => User::find($message->recipient_id)->username,
+                'recipient_name' => User::find($message->recipient_id)->full_name,
                 'message' => $message->message,
                 'sent_at' => $message->created_at
             ];
         });
 
-        return View('user/conversation', ['messages' => $messages]);
+        return View('user/conversations', [
+            'messages' => $messages,
+            'recipient_id' => $recipient->id,
+        ]);
         //return ['messages'=>$messages];
     }
 

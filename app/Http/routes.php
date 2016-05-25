@@ -39,6 +39,7 @@ Route::group(['prefix' => 'api', 'middleware' => 'auth'], function() {
             Route::post('add-comment', ['uses' => 'CommentController@add', 'as' => 'api-user-comment']);
             Route::post('follow', ['uses' => 'FriendshipController@follow', 'as' => 'api-user-follow']);
             Route::post('unfollow', ['uses' => 'FriendshipController@unfollow', 'as' => 'api-user-unfollow']);
+            Route::post('send-message', ['uses' => 'MessageController@sendMessage', 'as' => 'api-send-message']);
         });
 
         Route::group(['prefix' => 'admin', 'namespace' => 'AdminApi', 'middleware' => 'status', 'admin' => true], function(){
