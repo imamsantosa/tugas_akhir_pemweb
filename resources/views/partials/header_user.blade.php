@@ -22,7 +22,7 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li ><a href="{{route('user-home')}}">Home <span class="sr-only"></span></a></li>
                     <li ><a href="{{route('user-upload_image')}}">Upload <span class="sr-only"></span></a></li>
-                    <li ><a href="">Messages <span class="sr-only"></span></a></li>
+                    <li ><a href="{{route('user-message')}}">Messages <span class="sr-only"></span></a></li>
 
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="padding-top: 12px">

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>@yield('title')</title>
+    <title>@yield('title') | RailPicture.id</title>
     <link rel="stylesheet" href="{{url('assets/css/bootstrap.css')}}">
     <link rel="stylesheet" href="{{url('assets/css/style.css')}}">
     <meta name="viewport" content="width=device-width, initial-scale=1">

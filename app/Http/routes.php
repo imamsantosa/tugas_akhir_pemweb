@@ -23,8 +23,10 @@ Route::group(['middleware' => 'auth', 'namespace' => 'User'], function(){
     Route::get('u/{username}', ['uses' => 'ProfileController@index', 'as' => 'user-profile']);
     Route::get('/profile/edit', ['uses' => 'SettingProfileController@getProfile', 'as' => 'user-profile-edit']);
     Route::get('/profile/change-password', ['uses' => 'ProfileController@getPassword', 'as' => 'user-profile-edit-password']);
-    Route::get('conversations/{username}', ['uses' => 'MessageController@index', 'as' => 'user-conversations']);
-    Route::get('conversations/', ['uses' => 'MessageController@listConversation', 'as' => 'user-list-conversation']);
+    Route::get('/message', ['uses' => 'MessageController@index', 'as'=>'user-message']);
+    Route::get('/message/{id}', ['uses' => 'MessageController@conversation', 'as' => 'user-conversation']);
+    Route::post('/message/{id}', ['uses' => 'MessageController@conversationSave', 'as' => 'user-conversation-save']);
+
 
     Route::get('upload', ['uses' => 'UploadController@index', 'as' => 'user-upload_image']);
     Route::post('upload', ['uses' => 'UploadController@upload', 'as' => 'user-upload_proses']);
@@ -40,7 +42,7 @@ Route::group(['prefix' => 'api', 'middleware' => 'auth'], function() {
             Route::post('add-comment', ['uses' => 'CommentController@add', 'as' => 'api-user-comment']);
             Route::post('follow', ['uses' => 'FriendshipController@follow', 'as' => 'api-user-follow']);
             Route::post('unfollow', ['uses' => 'FriendshipController@unfollow', 'as' => 'api-user-unfollow']);
-            Route::post('send-message', ['uses' => 'MessageController@sendMessage', 'as' => 'api-send-message']);
+            Route::post('send-report', ['uses' => 'ReportController@send', 'as' => 'api-user-send-report']);
         });
 
         Route::group(['prefix' => 'admin', 'namespace' => 'AdminApi', 'middleware' => 'status', 'admin' => true], function(){

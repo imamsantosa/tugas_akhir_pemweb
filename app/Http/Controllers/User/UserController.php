@@ -23,7 +23,7 @@ class UserController extends Controller
             ->orWhereIn('user_id', $friend)
             ->orderBy('id', 'desc')
             ->get();
-
+        
         $posts= $result->map(function($post){
             return [
                 'post_id' => $post->id,

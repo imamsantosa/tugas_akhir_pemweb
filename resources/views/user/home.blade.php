@@ -1,6 +1,8 @@
 @extends('layouts.user')
 
-@section('title') RailPicture.com @endsection
+@section('title')
+
+@endsection
 
 @section('content')
     @if(count($posts) != 0)
@@ -27,7 +29,7 @@
                                             @if(auth()->user()->username == $post['username'])
                                             <li><a role="button" class="remove-button"><span class="glyphicon glyphicon-remove"></span> Delete</a></li>
                                             @endif
-                                            <li><a role="button" class="download-button"><span class="glyphicon glyphicon-download-alt"></span> Download</a></li>
+                                            <li><a role="button" class="download-button" href="{{url('images/'.$post['post_id'].'.jpg')}}" download="{{md5(date('Y-m-d h:i:s').auth()->user()->username . $post['post_id']).'.jpg'}}"><span class="glyphicon glyphicon-download-alt"></span> Download</a></li>
                                         </ul>
                                     </a>
                                 </div>
@@ -58,7 +60,7 @@
                                     @if(count($post['comments']) != 0)
                                     @foreach($post['comments'] as $comment)
                                     <div class="comment-list">
-                                        <div class="comment-name"><a href="{{route('user-profile', ['username' => $post['username']])}}" role="button">{{'@'.$comment['full_name']}}</a> : </div>
+                                        <div class="comment-name"><a href="{{route('user-profile', ['username' => $comment['username']])}}" role="button">{{'@'.$comment['username']}}</a> : </div>
                                         <div class="comment-content">{{$comment['comment']}} </div>
                                     </div>
                                     @endforeach
@@ -162,7 +164,7 @@
             function addComment(str){
                 var a = '<div class="comment-list">';
                 var b = '<div class="comment-name">';
-                var c = '<a href="u/'+str.username+'" role="button">@'+str.full_name+'</a> : </div>';
+                var c = '<a href="u/'+str.username+'" role="button">@'+str.username+'</a> : </div>';
                 var d = '<div class="comment-content">'+str.comment+'</div>';
                 var e = '</div>';
 
@@ -192,6 +194,55 @@
                 }
             });
 
+            $('.report-button').on('click', function(event){
+                var element = event.target.parentNode.parentNode.parentNode.parentNode;
+                var post_id = element.dataset['postid'];
+
+                console.log(element);
+                if(post_id !== undefined){
+                    $('.report_post_id').val(post_id);
+                    $('.modal-report').modal('show');
+                }
+            });
+
+            $('.form-report').on('submit', function (e) {
+                e.preventDefault();
+                $.ajax({
+                    method: 'POST',
+                    url: "{{route('api-user-send-report')}}",
+                    data: $(this).serialize(),
+                })
+                .done(function (msg) {
+                    var res = msg;
+                    if(!res.error){
+                        $('.form-report').hide();
+                        $('.info-report').show();
+                    }
+                });
+            })
         });
     </script>
+
+    <div class="modal fade modal-report" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+        <div class="modal-dialog modal-md" style="margin: 190px auto;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Report Post</h4>
+                </div>
+                <form action="" method="POST" class="form-report">
+                    <div class="modal-body">
+                        <input type="hidden" value="" name="report_post_id" class="report_post_id">
+                        <textarea class="form-control" placeholder="Reason..." rows="5" name="report_reason"></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" class="btn btn-primary submt-btn" value="Send">
+                    </div>
+                </form>
+                <div class="modal-body info-report" style="display: none;">
+                    <div class="alert alert-success" >Sukses to report image. Thanks for contribute!!!</div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection

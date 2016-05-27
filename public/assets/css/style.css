@@ -6,11 +6,18 @@ a{
 	color: gray;
 }
 
-.btn-follow{
-	margin-right: 10px;
+.btn-grey:hover{
 	background-color: #5D5C5C;
-
 }
+
+.btn-follow:hover{
+	background-color: #656363;
+}
+
+.btn-unfollow:hover{
+	background-color: #D04848;
+}
+
 .f-btn{
 	width: 388px;
 	background-color: #5D5C5C;
@@ -130,5 +137,32 @@ a{
 
 .login-screen {
 	margin-top: 15%;
+}
 
+.message-list {
+	padding-left: 0;
+	margin-bottom: 0;
+	list-style: none;
+}
+
+.message-list > li:hover{
+	background-color: #DEDADA;
+}
+
+.message-list > li{
+
+}
+
+.message-list > li > a{
+	text-decoration: none;
+}
+
+.message-item{
+	position: relative;
+	display: block;
+	padding: 10px 12px;
+}
+
+.readed{
+	background-color: rgb(234, 234, 225);
 }

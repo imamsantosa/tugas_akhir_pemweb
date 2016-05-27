@@ -33,19 +33,24 @@
             </div>
             <div class="row" style="margin-top: 12px">
                 <div class="col-md-3 col-xs-3">
-                    <a role="button" class="btn btn-primary btn-follow btn-block">{{ $post_count }} Posts</a>
+                    <a role="button" class="btn btn-primary btn-grey btn-block">{{ $post_count }} Posts</a>
                 </div>
                 <div class="col-md-3 col-xs-3">
-                    <a role="button" id="button-following" class="btn btn-primary btn-follow btn-block">{{ $following_count }} Following</a>
+                    <a role="button" id="button-following" class="btn btn-primary btn-grey btn-block">{{ $following_count }} Following</a>
                 </div>
                 <div class="col-md-3 col-xs-3">
-                    <a role="button" id="button-follower" class="btn btn-primary btn-follow btn-block">{{ $follower_count }} Follower</a>
+                    <a role="button" id="button-follower" class="btn btn-primary btn-grey btn-block">{{ $follower_count }} Follower</a>
                 </div>
                 <div class="col-md-3 col-xs-3">
-                    <a role="button" id="button-follow" style="{{ (!$is_followed) ? '' : 'display: none;' }}" data-idUser="{{ $user_data->id }}" class="btn btn-primary btn-follow btn-block" onclick="followUser()">Follow</a>
+                    <a role="button" id="button-follower" href="{{route('user-conversation', ['id' => $user_data -> id])}}" class="btn btn-primary btn-grey btn-block">Send Message</a>
                 </div>
-                <div class="col-md-3 col-xs-3">
-                    <a role="button" id="button-unfollow" style="{{ ($is_followed) ? '' : 'display: none;' }}" data-idUser="{{ $user_data->id }}" class="btn btn-primary btn-follow btn-block" onclick="unfollowUser()">Unfollow</a>
+            </div>
+            <div class="row" style="margin-top: 10px;">
+                <div class="col-md-12 col-xs-12 follow" style="{{ (!$is_followed) ? '' : 'display: none;' }}">
+                    <a role="button" id="button-follow"  data-idUser="{{ $user_data->id }}" class="btn btn-primary btn-grey btn-follow btn-block">Follow</a>
+                </div>
+                <div class="col-md-12 col-xs-12 unfollow" style="{{ ($is_followed) ? '' : 'display: none;' }}">
+                    <a role="button" id="button-unfollow"  data-idUser="{{ $user_data->id }}" class="btn btn-primary btn-grey btn-unfollow btn-block">Unfollow</a>
                 </div>
             </div>
         </div>
@@ -55,43 +60,44 @@
 
 @section('footer-additional')
     <script>
-
-        function followUser() {
-            $.ajax({
-                method: 'POST',
-                url: "{{ route('api-user-follow') }}",
-                data: "friend_id=" + $("#button-follow").attr("data-idUser")
-            })
-            .done(function (msg) {
-                var resp = msg;
-                if (!resp.error) {
-                    $("#button-follow").hide();
-                    $("#button-unfollow").show();
-                    $("#button-follower").text(resp.follower_count);
-                    $("#button-following").text(resp.following_count);
-                }
-            });
-        }
-
-        function unfollowUser() {
-            $.ajax({
-                method: 'POST',
-                url: "{{ route('api-user-unfollow') }}",
-                data: "friend_id=" + $("#button-follow").attr("data-idUser")
-            })
-            .done(function (msg) {
-                var resp = msg;
-                if (!resp.error) {
-                    $("#button-unfollow").hide();
-                    $("#button-follow").show();
-                    $("#button-follower").text(resp.follower_count);
-                    $("#button-following").text(resp.following_count);
-                }
-            });
-        }
-
         $(document).ready(function(){
+            $('.btn-follow').on('click', function(e){
+                e.preventDefault();
+                $.ajax({
+                    method: 'POST',
+                    url: "{{ route('api-user-follow') }}",
+                    data: "friend_id=" + $("#button-follow").attr("data-idUser")
+                })
+                .done(function (msg) {
+                    var resp = msg;
+                    if (!resp.error) {
+                        $(".follow").hide();
+                        $(".unfollow").show();
+                        updateCount(resp);
+                    }
+                });
+            });
 
+            $('.btn-unfollow').on('click', function (e) {
+                $.ajax({
+                    method: 'POST',
+                    url: "{{ route('api-user-unfollow') }}",
+                    data: "friend_id=" + $("#button-follow").attr("data-idUser")
+                })
+                .done(function (msg) {
+                    var resp = msg;
+                    if (!resp.error) {
+                        $(".unfollow").hide();
+                        $(".follow").show();
+                        updateCount(resp);
+                    }
+                });
+            });
+
+            function updateCount(resp){
+                $("#button-follower").text(resp.follower_count);
+                $("#button-following").text(resp.following_count);
+            }
         });
     </script>
 @endsection
