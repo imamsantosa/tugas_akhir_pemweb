@@ -21,13 +21,13 @@ Route::get('auth/logout', ['uses' => 'AuthController@logout', 'as'=>'auth_logout
 Route::group(['middleware' => 'auth', 'namespace' => 'User'], function(){
     Route::get('/', ['uses' => 'UserController@index', 'as' => 'user-home']);
     Route::get('u/{username}', ['uses' => 'ProfileController@index', 'as' => 'user-profile']);
-    Route::get('/profile/edit', ['uses' => 'SettingProfileController@getProfile', 'as' => 'user-profile-edit']);
-    Route::get('/profile/change-password', ['uses' => 'ProfileController@getPassword', 'as' => 'user-profile-edit-password']);
-    Route::get('/message', ['uses' => 'MessageController@index', 'as'=>'user-message']);
-    Route::get('/message/{id}', ['uses' => 'MessageController@conversation', 'as' => 'user-conversation']);
-    Route::post('/message/{id}', ['uses' => 'MessageController@conversationSave', 'as' => 'user-conversation-save']);
-
-
+    Route::get('profile/edit', ['uses' => 'SettingProfileController@index', 'as' => 'user-profile-edit']);
+    Route::post('profile/edit', ['uses' => 'SettingProfileController@save', 'as' => 'user-profile-edit-save']);
+    Route::get('profile/change-password', ['uses' => 'ProfileController@getPassword', 'as' => 'user-profile-edit-password']);
+    Route::get('message', ['uses' => 'MessageController@index', 'as'=>'user-message']);
+    Route::get('message/{id}', ['uses' => 'MessageController@conversation', 'as' => 'user-conversation']);
+    Route::post('message/{id}', ['uses' => 'MessageController@conversationSave', 'as' => 'user-conversation-save']);
+    Route::get('search', ['uses' => 'SearchController@index', 'as' => 'user-search']);
     Route::get('upload', ['uses' => 'UploadController@index', 'as' => 'user-upload_image']);
     Route::post('upload', ['uses' => 'UploadController@upload', 'as' => 'user-upload_proses']);
 });
@@ -43,6 +43,7 @@ Route::group(['prefix' => 'api', 'middleware' => 'auth'], function() {
             Route::post('follow', ['uses' => 'FriendshipController@follow', 'as' => 'api-user-follow']);
             Route::post('unfollow', ['uses' => 'FriendshipController@unfollow', 'as' => 'api-user-unfollow']);
             Route::post('send-report', ['uses' => 'ReportController@send', 'as' => 'api-user-send-report']);
+            Route::post('change-password', ['uses' => 'PasswordController@change', 'as' => 'api-change-password']);
         });
 
         Route::group(['prefix' => 'admin', 'namespace' => 'AdminApi', 'middleware' => 'status', 'admin' => true], function(){

@@ -9,9 +9,10 @@
 namespace App\Http\Controllers\User;
 
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class PasswordController
+class PasswordController extends Controller
 {
     public function index()
     {

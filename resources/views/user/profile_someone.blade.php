@@ -1,7 +1,7 @@
 @extends('layouts/user')
 
 @section('title')
-    {{ $user_data->full_name }} | RailPicture.id
+    {{ $data['identity']->full_name }} | RailPicture.id
 @endsection
 
 @section('content')
@@ -17,40 +17,40 @@
                 <div class="col-md-12">
                     <div class="timeline-text">
                         <div class="account-info">
-                            <img src="{{url('avatars/'.$user_data->avatar)}}" class="img-thumbnail image-info"/>
+                            <img src="{{url('avatars/'.$data['identity']->avatar)}}" class="img-thumbnail image-info"/>
                             <div class="identity-info">
-                                <h4 class="name-info">{{$user_data->full_name}}</h4>
-                                <h5 class="id-info">{{'@'.$user_data->username}}</h5>
+                                <h4 class="name-info">{{$data['identity']->full_name}}</h4>
+                                <h5 class="id-info">{{'@'.$data['identity']->username}}</h5>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-12">
                     <div class="timeline-text">
-                        {{$user_data->status_message}}
+                        {{$data['identity']->status_message}}
                     </div>
                 </div>
             </div>
             <div class="row" style="margin-top: 12px">
                 <div class="col-md-3 col-xs-3">
-                    <a role="button" class="btn btn-primary btn-grey btn-block">{{ $post_count }} Posts</a>
+                    <a role="button" class="btn btn-primary btn-grey btn-block">{{ $data['post_count'] }} Posts</a>
                 </div>
                 <div class="col-md-3 col-xs-3">
-                    <a role="button" id="button-following" class="btn btn-primary btn-grey btn-block">{{ $following_count }} Following</a>
+                    <a role="button" id="button-following" class="btn btn-primary btn-grey btn-block">{{ $data['following_count'] }} Following</a>
                 </div>
                 <div class="col-md-3 col-xs-3">
-                    <a role="button" id="button-follower" class="btn btn-primary btn-grey btn-block">{{ $follower_count }} Follower</a>
+                    <a role="button" id="button-follower" class="btn btn-primary btn-grey btn-block">{{ $data['follower_count'] }} Follower{{($data['follower_count'] >= 2)? 's':''}}</a>
                 </div>
                 <div class="col-md-3 col-xs-3">
-                    <a role="button" id="button-follower" href="{{route('user-conversation', ['id' => $user_data -> id])}}" class="btn btn-primary btn-grey btn-block">Send Message</a>
+                    <a role="button" id="button-follower" href="{{route('user-conversation', ['id' => $data['identity']->id])}}" class="btn btn-primary btn-grey btn-block">Send Message</a>
                 </div>
             </div>
             <div class="row" style="margin-top: 10px;">
-                <div class="col-md-12 col-xs-12 follow" style="{{ (!$is_followed) ? '' : 'display: none;' }}">
-                    <a role="button" id="button-follow"  data-idUser="{{ $user_data->id }}" class="btn btn-primary btn-grey btn-follow btn-block">Follow</a>
+                <div class="col-md-12 col-xs-12 follow" style="{{ (!$data['is_followed']) ? '' : 'display: none;' }}">
+                    <a role="button" id="button-follow"  data-idUser="{{ $data['identity']->id }}" class="btn btn-primary btn-grey btn-follow btn-block">Follow</a>
                 </div>
-                <div class="col-md-12 col-xs-12 unfollow" style="{{ ($is_followed) ? '' : 'display: none;' }}">
-                    <a role="button" id="button-unfollow"  data-idUser="{{ $user_data->id }}" class="btn btn-primary btn-grey btn-unfollow btn-block">Unfollow</a>
+                <div class="col-md-12 col-xs-12 unfollow" style="{{ ($data['is_followed']) ? '' : 'display: none;' }}">
+                    <a role="button" id="button-unfollow"  data-idUser="{{ $data['identity']->id }}" class="btn btn-primary btn-grey btn-unfollow btn-block">Unfollow</a>
                 </div>
             </div>
         </div>

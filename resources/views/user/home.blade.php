@@ -233,7 +233,7 @@
                 <form action="" method="POST" class="form-report">
                     <div class="modal-body">
                         <input type="hidden" value="" name="report_post_id" class="report_post_id">
-                        <textarea class="form-control" placeholder="Reason..." rows="5" name="report_reason"></textarea>
+                        <textarea class="form-control" placeholder="Reason..." rows="5" name="report_reason" required="required`    "></textarea>
                     </div>
                     <div class="modal-footer">
                         <input type="submit" class="btn btn-primary submt-btn" value="Send">

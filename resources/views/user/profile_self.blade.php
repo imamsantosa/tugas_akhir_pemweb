@@ -33,13 +33,13 @@
             </div>
             <div class="row" style="margin-top: 12px">
                 <div class="col-md-4 col-xs-4">
-                    <a role="button" class="btn btn-primary btn-follow btn-block">{{ $post_count }} Posts</a>
+                    <a role="button" class="btn btn-primary btn-follow btn-block">{{ $data['post_count'] }} Posts</a>
                 </div>
                 <div class="col-md-4 col-xs-4">
-                    <a role="button" class="btn btn-primary btn-follow btn-block">{{ $following_count }} Following</a>
+                    <a role="button" class="btn btn-primary btn-follow btn-block">{{ $data['following_count'] }} Following</a>
                 </div>
                 <div class="col-md-4 col-xs-4">
-                    <a role="button" class="btn btn-primary btn-follow btn-block">{{ $follower_count }} Follower</a>
+                    <a role="button" class="btn btn-primary btn-follow btn-block">{{ $data['follower_count'] }} Follower{{($data['follower_count'] >= 2)? 's':''}}</a>
                 </div>
             </div>
         </div>

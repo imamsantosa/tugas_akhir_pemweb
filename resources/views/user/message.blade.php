@@ -56,23 +56,7 @@
 @section('footer-additional')
     <script>
         $(document).ready(function(){
-            function readImage(input) {
 
-                if (input.files && input.files[0]) {
-                    var reader = new FileReader();
-
-                    reader.onload = function (e) {
-                        $('#image-preview').show();
-                        $('#image-preview').attr('src', e.target.result);
-                    }
-
-                    reader.readAsDataURL(input.files[0]);
-                }
-            }
-
-            $("#image").on('change', function(){
-                readImage(this);
-            });
         });
     </script>
 @endsection
