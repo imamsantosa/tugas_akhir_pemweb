@@ -166,3 +166,38 @@ a{
 .readed{
 	background-color: rgb(234, 234, 225);
 }
+
+.list-btn-unfollow:hover {
+	background-color: #D04848;
+}
+
+.list-btn-unfollow:hover > span {
+	display: none;
+}
+
+.list-btn-unfollow:hover:after{
+	content: "Unfollow";
+}
+
+.image-profile{
+	height: 170px;
+	width: 220px;
+	margin-bottom: 25px;
+}
+
+.description-image-profil {
+	height: 170px;
+	width: 220px;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	background: rgba(119, 128, 134, 0.85);
+	color: #fff;
+	visibility: hidden;
+	opacity: 0;
+}
+
+.image-item:hover .description-image-profil {
+	visibility: visible;
+	opacity: 1;
+}

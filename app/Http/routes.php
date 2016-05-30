@@ -2,12 +2,13 @@
 
 /*
 |--------------------------------------------------------------------------
-| Application Routes
+| Iki Route nya yo bro
 |--------------------------------------------------------------------------
 |
-| Here is where you can register all of the routes for an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
+| ojo lali tontoken middleware e.
+|
+| pisahen route gawe AJAX(api) opo sing request biasa.
+| termasuk controllere ojo lali dipisah ben kepenak
 |
 */
 
@@ -31,7 +32,7 @@ Route::group(['middleware' => 'auth', 'namespace' => 'User'], function(){
     Route::get('search', ['uses' => 'SearchController@index', 'as' => 'user-search']);
     Route::get('upload', ['uses' => 'UploadController@index', 'as' => 'user-upload_image']);
     Route::post('upload', ['uses' => 'UploadController@upload', 'as' => 'user-upload_proses']);
-
+    Route::get('post/{id}', ['uses' => 'PostController@single', 'as' => 'user-post-single']);
 });
 
 Route::group(['prefix' => 'api', 'middleware' => 'auth'], function() {

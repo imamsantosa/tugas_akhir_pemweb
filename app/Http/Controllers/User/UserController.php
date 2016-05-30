@@ -32,8 +32,8 @@ class UserController extends Controller
                 'avatar' => $post->user->avatar,
                 'caption' => $post->caption,
                 'isLiked' => $post->isLiked(),
-                'likeCount' => $post->likeCount(),
-                'commentCount' => $post->commentCount(),
+                'likeCount' => $post->like->count(),
+                'commentCount' => $post->comment->count(),
                 'created_at' => $post->created_at(),
                 'datetime' => $post->created_at->toDateTimeString(),
                 'comments' => $post->comments()

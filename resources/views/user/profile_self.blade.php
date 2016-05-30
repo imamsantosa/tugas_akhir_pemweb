@@ -36,18 +36,21 @@
                     <a role="button" class="btn btn-primary btn-follow btn-block">{{ $data['post_count'] }} Posts</a>
                 </div>
                 <div class="col-md-4 col-xs-4">
-                    <a role="button" class="btn btn-primary btn-follow btn-block">{{ $data['following_count'] }} Following</a>
+                    <a role="button" class="btn btn-primary btn-follow btn-block following-btn">{{ $data['following_count'] }} Following</a>
                 </div>
                 <div class="col-md-4 col-xs-4">
-                    <a role="button" class="btn btn-primary btn-follow btn-block">{{ $data['follower_count'] }} Follower{{($data['follower_count'] >= 2)? 's':''}}</a>
+                    <a role="button" class="btn btn-primary btn-follow btn-block follower-btn">{{ $data['follower_count'] }} Follower{{($data['follower_count'] >= 2)? 's':''}}</a>
                 </div>
             </div>
         </div>
     </div>
 
+    @include('partials.photo_list_profile')
 @endsection
 
 @section('footer-additional')
+    @include('partials.following_follower_list')
+
     <script>
         $(document).ready(function(){
 

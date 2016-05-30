@@ -27,6 +27,11 @@ class User extends Authenticatable
 
     protected $dates = ['created_at', 'updated_at'];
 
+    public function post()
+    {
+        return $this->hasMany(Post::class)->orderBy('id', 'desc');
+    }
+
     public function followingCount()
     {
         return Friendship::where('user_id', $this->id)->count();
@@ -35,11 +40,6 @@ class User extends Authenticatable
     public function followerCount()
     {
         return Friendship::where('friend_id', $this->id)->count();
-    }
-
-    public function post()
-    {
-        return $this->hasMany(Post::class);
     }
 
     public function isFollowed()

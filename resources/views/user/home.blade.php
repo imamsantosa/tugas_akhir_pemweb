@@ -11,7 +11,9 @@
                 <div class="panel-body">
                     <div class="row" data-postId="{{$post['post_id']}}">
                         <div class="col-md-12 col-xs-12 text-center" id="image-post">
-                            <img src="{{url('images/'.$post['post_id'].'.jpg')}}" class="img-thumbnail">
+                            <a href="{{route('user-post-single', ['id'=> $post['post_id']])}}">
+                                <img src="{{url('images/'.$post['post_id'].'.jpg')}}" class="img-thumbnail">
+                            </a>
                         </div>
                         <div class="col-md-12 col-xs-12 action">
                             <div class="row text-center interaction">

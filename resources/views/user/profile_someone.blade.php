@@ -36,10 +36,10 @@
                     <a role="button" class="btn btn-primary btn-grey btn-block">{{ $data['post_count'] }} Posts</a>
                 </div>
                 <div class="col-md-3 col-xs-3">
-                    <a role="button" id="button-following" class="btn btn-primary btn-grey btn-block">{{ $data['following_count'] }} Following</a>
+                    <a role="button" id="button-following" class="btn btn-primary btn-grey btn-block following-btn">{{ $data['following_count'] }} Following</a>
                 </div>
                 <div class="col-md-3 col-xs-3">
-                    <a role="button" id="button-follower" class="btn btn-primary btn-grey btn-block">{{ $data['follower_count'] }} Follower{{($data['follower_count'] >= 2)? 's':''}}</a>
+                    <a role="button" id="button-follower" class="btn btn-primary btn-grey btn-block follower-btn">{{ $data['follower_count'] }} Follower{{($data['follower_count'] >= 2)? 's':''}}</a>
                 </div>
                 <div class="col-md-3 col-xs-3">
                     <a role="button" id="button-follower" href="{{route('user-conversation', ['id' => $data['identity']->id])}}" class="btn btn-primary btn-grey btn-block">Send Message</a>
@@ -56,9 +56,12 @@
         </div>
     </div>
 
+    @include('partials.photo_list_profile')
+
 @endsection
 
 @section('footer-additional')
+    @include('partials.following_follower_list')
     <script>
         $(document).ready(function(){
             $('.btn-follow').on('click', function(e){
