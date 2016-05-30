@@ -32,6 +32,7 @@ class SettingProfileController extends Controller
             'birthdate' => $birthdate,
             'status_message' => $status_message
         ]);
+        
         return redirect()->route('user-profile-edit')
             ->with(['status' => 'success', 'title' => 'Success!!', 'message' => 'Your Profile Updated!!']);
     }

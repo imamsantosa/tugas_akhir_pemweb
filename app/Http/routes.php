@@ -24,12 +24,14 @@ Route::group(['middleware' => 'auth', 'namespace' => 'User'], function(){
     Route::get('profile/edit', ['uses' => 'SettingProfileController@index', 'as' => 'user-profile-edit']);
     Route::post('profile/edit', ['uses' => 'SettingProfileController@save', 'as' => 'user-profile-edit-save']);
     Route::get('profile/change-password', ['uses' => 'ProfileController@getPassword', 'as' => 'user-profile-edit-password']);
+    Route::post('profile/change-ava', ['uses' => 'AvatarController@change', 'as' => 'user-avatar-change']);
     Route::get('message', ['uses' => 'MessageController@index', 'as'=>'user-message']);
     Route::get('message/{id}', ['uses' => 'MessageController@conversation', 'as' => 'user-conversation']);
     Route::post('message/{id}', ['uses' => 'MessageController@conversationSave', 'as' => 'user-conversation-save']);
     Route::get('search', ['uses' => 'SearchController@index', 'as' => 'user-search']);
     Route::get('upload', ['uses' => 'UploadController@index', 'as' => 'user-upload_image']);
     Route::post('upload', ['uses' => 'UploadController@upload', 'as' => 'user-upload_proses']);
+
 });
 
 Route::group(['prefix' => 'api', 'middleware' => 'auth'], function() {

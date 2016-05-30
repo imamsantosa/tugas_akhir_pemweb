@@ -59,7 +59,7 @@
                         <a role="button" class="btn btn-primary btn-grey btn-block ch-pass">Change Password</a>
                     </div>
                     <div class="col-md-4">
-                        <a role="button" class="btn btn-primary btn-grey btn-block">Change Avatar</a>
+                        <a role="button" class="btn btn-primary btn-grey btn-block ch-ava">Change Avatar</a>
                     </div>
                     <div class="col-md-4">
                         <input type="submit" class="btn btn-primary btn-grey btn-block" value="Save Change">
@@ -113,6 +113,39 @@
             </div>
         </div>
     </div>
+    <div class="modal fade modal-ch-ava" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+        <div class="modal-dialog modal-md" style="margin: 190px auto;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Change Avatar</h4>
+                </div>
+                <div class="modal-body info-ch-p" style="display: none;">
+                    <div class="info-ch-ava-suc">
+                    </div>
+                </div>
+                <form class="form-horizontal" action="{{route('user-avatar-change')}}" method="POST" enctype="multipart/form-data">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <input type="file" name="image" id="image" required="required" >
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <img src="" id="image-preview" class="img-thumbnail" style="display: none;">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" class="btn btn-primary submt-btn" value="Change">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
     <script type="text/javascript" src=" {{ url('assets/lib/datepicker/js/bootstrap-datepicker.js') }} " ></script>
     <script>
         $( document ).ready(function() {
@@ -157,6 +190,28 @@
             function chPassInfoSuc(res){
                 $('.info-ch-pass-suc').html('<div class="alert alert-'+res.status+'">'+res.message+'</div>');
             }
+
+            $('.ch-ava').on('click', function(e){
+                $('.modal-ch-ava').modal('show');
+            })
+
+            function readImage(input) {
+
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        $('#image-preview').show();
+                        $('#image-preview').attr('src', e.target.result);
+                    }
+
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+            $("#image").on('change', function(){
+                readImage(this);
+            });
         });
     </script>
 

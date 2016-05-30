@@ -38,7 +38,6 @@
                                 <input type="submit" class="form-control" value="Post" style="background-color: #5D5C5C;color: white;">
                             </div>
                         </div>
-                        </input>
                     </form>
                 </div>
             </div>
