@@ -40,9 +40,11 @@ Route::group(['prefix' => 'api', 'middleware' => 'auth'], function() {
         Route::group(['prefix' => 'user', 'namespace' => 'UserApi', 'middleware' => 'status', 'admin' => false], function() {
             //implement route for user
             Route::post('delete-post', ['uses' => 'PostController@delete', 'as' => 'api-user-delete-post']);
+            Route::post('edit-caption', ['uses' => 'PostController@editCaption', 'as' => 'api-user-edit-caption']);
             Route::post('like', ['uses' => 'LikeController@like', 'as' => 'api-user-like']);
             Route::post('unlike', ['uses' => 'LikeController@unlike', 'as' => 'api-user-unlike']);
             Route::post('add-comment', ['uses' => 'CommentController@add', 'as' => 'api-user-comment']);
+            Route::post('delete-comment', ['uses' => 'CommentController@delete', 'as' => 'api-user-delete-comment']);
             Route::post('follow', ['uses' => 'FriendshipController@follow', 'as' => 'api-user-follow']);
             Route::post('unfollow', ['uses' => 'FriendshipController@unfollow', 'as' => 'api-user-unfollow']);
             Route::post('send-report', ['uses' => 'ReportController@send', 'as' => 'api-user-send-report']);

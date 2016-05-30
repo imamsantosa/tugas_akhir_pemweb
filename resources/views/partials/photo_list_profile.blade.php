@@ -19,12 +19,13 @@
                             </div>
                         </div>
                     </div>
-
                 </a>
             </div>
             @endforeach
             @else
-            <div class="alert alert-warning text-center">Not yet any post</div>
+                <div class="col-xs-12">
+                    <div class="alert alert-warning text-center">Not yet any post</div>
+                </div>
             @endif
         </div>
     </div>

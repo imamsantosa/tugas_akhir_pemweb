@@ -26,7 +26,7 @@
                                     <div class="row">
                                         <div class="col-xs-6 text-left">
                                             <div class="account-info">
-                                                <img src="{{url('avatars/'.$message['avatar'])}}" class="img-thumbnail image-info"/>
+                                                <img style="padding: 0px; " src="{{url('avatars/'.$message['avatar'])}}" class="img-thumbnail image-info"/>
                                                 <div class="identity-info">
                                                     <h4 class="name-info">{{$message['full_name']}}</h4>
                                                     <h5 class="id-info">{{'@'.$message['username']}}</h5>

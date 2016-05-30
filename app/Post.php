@@ -39,6 +39,7 @@ class Post extends Model
 
     	$recent = $comments->map(function($comment){
             return [
+                'id' => $comment->id,
                 'username' => $comment->user->username,
                 'full_name' => $comment->user->full_name,
                 'comment' => $comment->comment

@@ -32,4 +32,14 @@ class PostRepository
 
         return ['error' => false, 'message' => 'sukses menghapus post'];
     }
+
+    public function editCaption()
+    {
+        $post = $this->post->find($this->request->input('post_id'));
+        $post->update([
+            'caption' => $this->request->input('caption')
+        ]);
+
+        return ['error' => false, 'message'=>'sukses mengubah caption', 'new_caption' => $post->caption];
+    }
 }

@@ -118,6 +118,10 @@ a{
 	display: inline;
 }
 
+.comment-list:hover{
+	background-color: rgba(234, 234, 225, 0.49);
+}
+
 #overlayup {
     position: absolute;
     left: 0;

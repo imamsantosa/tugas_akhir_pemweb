@@ -156,11 +156,20 @@
             });
 
             function addComment(str){
-                var a = '<div class="comment-list">';
-                var b = '<div class="comment-name">';
-                var c = '<a href="u/'+str.username+'" role="button">@'+str.username+'</a> : </div>';
-                var d = '<div class="comment-content">'+str.comment+'</div>';
-                var e = '</div>';
+
+
+                var a = '<div class="comment-list col-xs-12">'+
+                        '<div class="row">'+
+                        '<div class="col-xs-11">'+
+                        '<div class="comment-name">';
+                var b = '<a href="{{route('user-profile', '')}}/'+str.username+'" role="button">@'+str.username+'</a> : </div>';
+                var c = '<div class="comment-content">'+str.comment+'</div>';
+                var d = '</div>';
+                var e = '<div class="col-xs-1">'+
+                        '<a class="" role="button"><span class="glyphicon glyphicon-remove"></span></a>'+
+                        '</div>'+
+                        '</div>'+
+                        '</div>';
 
                 return a+b+c+d+e;
             }
