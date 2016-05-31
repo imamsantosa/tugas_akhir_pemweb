@@ -20,7 +20,6 @@ class SearchController extends Controller
         $username = $request->input('query');
         $result = User::where('username', $username)
             ->orWhere('username', 'like', '%'.$username.'%')
-            ->where('is_admin', false)
             ->get();
 
         return View('user/search', ['result' => $result, 'query' => $username]);

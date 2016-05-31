@@ -3,11 +3,10 @@
  * Created by PhpStorm.
  * User: imamsantosa
  * Date: 5/31/16
- * Time: 01:53
+ * Time: 18:43
  */
 
-namespace App\Http\Controllers\User;
-
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Post;
@@ -17,8 +16,6 @@ class PostController extends Controller
 {
     public function single(Request $request, $id)
     {
-        if(auth()->user()->is_admin)
-            return redirect()->route('admin-post-single', $id);
         $post = Post::find($id);
 
         if($post == null)
@@ -38,6 +35,6 @@ class PostController extends Controller
             'comments' => $post->comments()
         ];
 
-        return View('user/single_post', ['post' => $result]);
+        return View('user/single_post_admin', ['post' => $result]);
     }
 }

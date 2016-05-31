@@ -19,7 +19,7 @@
                         <div class="account-info">
                             <img src="{{url('avatars/'.auth()->user()->avatar)}}" class="img-thumbnail image-info"/>
                             <div class="identity-info">
-                                <h4 class="name-info">{{auth()->user()->full_name}}</h4>
+                                <h4 class="name-info">{{auth()->user()->full_name}} {!! (auth()->user()->is_admin)? '<span style="font-size: 45%;" class="label label-primary">Admin</span>' : '' !!}</h4>
                                 <h5 class="id-info">{{'@'.auth()->user()->username}}</h5>
                             </div>
                         </div>

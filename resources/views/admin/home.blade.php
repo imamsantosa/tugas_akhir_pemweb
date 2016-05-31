@@ -1,4 +1,4 @@
-@extends('layouts.user')
+@extends('layouts.admin')
 
 @section('title')
 
@@ -28,11 +28,8 @@
                                     <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                         <span class="glyphicon glyphicon-option-horizontal"></span> Options
                                         <ul class="dropdown-menu">
-                                            @if(auth()->user()->username == $post['username'])
                                             <li><a role="button" class="remove-button"><span class="glyphicon glyphicon-remove"></span> Delete</a></li>
                                             <li><a role="button" data-post-id="{{$post['post_id']}}" class="edit-caption-button"><span class="glyphicon glyphicon-pencil"></span> Edit Caption</a></li>
-
-                                            @endif
                                             <li><a role="button" class="download-button" href="{{url('images/'.$post['post_id'].'.jpg')}}" download="{{md5(date('Y-m-d h:i:s').auth()->user()->username . $post['post_id']).'.jpg'}}"><span class="glyphicon glyphicon-download-alt"></span> Download</a></li>
                                         </ul>
                                     </a>
@@ -50,7 +47,7 @@
                                 <div class="account-info">
                                     <img src="{{url('avatars/'.$post['avatar'])}}" class="img-thumbnail image-info"/>
                                     <div class="identity-info">
-                                        <h4 class="name-info"><a href="{{route('user-profile', ['username' => $post['username']])}}" role="button">{{$post['full_name']}} {!! ($post['is_admin'])? '<span style="font-size: 45%;" class="label label-primary">Admin</span>' : '' !!}</a></h4>
+                                        <h4 class="name-info"><a href="{{route('user-profile', ['username' => $post['username']])}}" role="button">{{$post['full_name']}}  {!! ($post['is_admin'])? '<span style="font-size: 45%;" class="label label-primary">Admin</span>' : '' !!}</a></h4>
                                         <h5 class="id-info"><a href="{{route('user-profile', ['username' => $post['username']])}}" role="button"> {{'@'.$post['username']}} </a></h5>
                                     </div>
                                 </div>
@@ -60,21 +57,19 @@
                                 <hr>
                                 <div class="comment row">
                                     @if(count($post['comments']) != 0)
-                                    @foreach($post['comments'] as $comment)
-                                    <div class="comment-list col-xs-12">
-                                        <div class="row">
-                                            <div class="col-xs-11">
-                                                <div class="comment-name"><a href="{{route('user-profile', ['username' => $comment['username']])}}" role="button">{{'@'.$comment['username']}}</a> : </div>
-                                                <div class="comment-content">{{$comment['comment']}} </div>
+                                        @foreach($post['comments'] as $comment)
+                                            <div class="comment-list col-xs-12">
+                                                <div class="row">
+                                                    <div class="col-xs-11">
+                                                        <div class="comment-name"><a href="{{route('user-profile', ['username' => $comment['username']])}}" role="button">{{'@'.$comment['username']}}</a> : </div>
+                                                        <div class="comment-content">{{$comment['comment']}} </div>
+                                                    </div>
+                                                    <div class="col-xs-1">
+                                                        <a class="delete-comment-btn" data-comment-id="{{$comment['id']}}" role="button"><span class="glyphicon glyphicon-remove"></span></a>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="col-xs-1">
-                                                @if($comment['username'] === auth()->user()->username )
-                                                <a class="delete-comment-btn" data-comment-id="{{$comment['id']}}" role="button"><span class="glyphicon glyphicon-remove"></span></a>
-                                                @endif
-                                            </div>
-                                        </div>
-                                    </div>
-                                    @endforeach
+                                        @endforeach
                                     @endif
                                 </div>
                             </div>
@@ -108,18 +103,18 @@
                 var post_id = element.dataset['postid'];
                 console.log(post_id);
                 $.ajax({
-                    method: 'POST',
-                    url: "{{route('api-user-like')}}",
-                    data: 'post_id='+post_id,
-                })
-                .done(function (msg) {
-                    var res = msg;
-                    if(!res.error){
-                        $(element).find('.action').find('.interaction').find('.like-button').hide();
-                        $(element).find('.action').find('.interaction').find('.unlike-button').show();
-                        $(element).find('.action').find('.interaction').find('.unlike-button').find('#count-unlike').html(res.count_like);
-                    }
-                });
+                            method: 'POST',
+                            url: "{{route('api-user-like')}}",
+                            data: 'post_id='+post_id,
+                        })
+                        .done(function (msg) {
+                            var res = msg;
+                            if(!res.error){
+                                $(element).find('.action').find('.interaction').find('.like-button').hide();
+                                $(element).find('.action').find('.interaction').find('.unlike-button').show();
+                                $(element).find('.action').find('.interaction').find('.unlike-button').find('#count-unlike').html(res.count_like);
+                            }
+                        });
             });
 
             $('.unlike-button').on('click', function(event){
@@ -127,18 +122,18 @@
                 var post_id = element.dataset['postid'];
                 console.log(element);
                 $.ajax({
-                    method: 'POST',
-                    url: "{{route('api-user-unlike')}}",
-                    data: 'post_id='+post_id,
-                })
-                .done(function (msg) {
-                    var res = msg;
-                    if(!res.error){
-                        $(element).find('.action').find('.interaction').find('.unlike-button').hide();
-                        $(element).find('.action').find('.interaction').find('.like-button').show();
-                        $(element).find('.action').find('.interaction').find('.like-button').find('#count-like').html(res.count_like);
-                    }
-                });
+                            method: 'POST',
+                            url: "{{route('api-user-unlike')}}",
+                            data: 'post_id='+post_id,
+                        })
+                        .done(function (msg) {
+                            var res = msg;
+                            if(!res.error){
+                                $(element).find('.action').find('.interaction').find('.unlike-button').hide();
+                                $(element).find('.action').find('.interaction').find('.like-button').show();
+                                $(element).find('.action').find('.interaction').find('.like-button').find('#count-like').html(res.count_like);
+                            }
+                        });
             });
 
             $('.form-comment').on('submit', function (event) {
@@ -176,9 +171,9 @@
 
 
                 var a = '<div class="comment-list col-xs-12">'+
-                            '<div class="row">'+
-                                '<div class="col-xs-11">'+
-                                    '<div class="comment-name">';
+                        '<div class="row">'+
+                        '<div class="col-xs-11">'+
+                        '<div class="comment-name">';
                 var b = '<a href="{{route('user-profile', '')}}/'+str.username+'" role="button">@'+str.username+'</a> : </div>';
                 var c = '<div class="comment-content">'+str.comment+'</div>';
                 var d = '</div>';
@@ -200,16 +195,16 @@
                 if(post_id !== undefined){
                     if(confirm("Are you sure to delete this image ?")){
                         $.ajax({
-                            method: 'POST',
-                            url: "{{route('api-user-delete-post')}}",
-                            data: 'post_id='+post_id,
-                        })
-                        .done(function (msg) {
-                            var res = msg;
-                            if(!res.error){
-                                $(deleted).remove();
-                            }
-                        });
+                                    method: 'POST',
+                                    url: "{{route('api-user-delete-post')}}",
+                                    data: 'post_id='+post_id,
+                                })
+                                .done(function (msg) {
+                                    var res = msg;
+                                    if(!res.error){
+                                        $(deleted).remove();
+                                    }
+                                });
                     }
                 }
             });
@@ -228,17 +223,17 @@
             $('.form-report').on('submit', function (e) {
                 e.preventDefault();
                 $.ajax({
-                    method: 'POST',
-                    url: "{{route('api-user-send-report')}}",
-                    data: $(this).serialize(),
-                })
-                .done(function (msg) {
-                    var res = msg;
-                    if(!res.error){
-                        $('.form-report').hide();
-                        $('.info-report').show();
-                    }
-                });
+                            method: 'POST',
+                            url: "{{route('api-user-send-report')}}",
+                            data: $(this).serialize(),
+                        })
+                        .done(function (msg) {
+                            var res = msg;
+                            if(!res.error){
+                                $('.form-report').hide();
+                                $('.info-report').show();
+                            }
+                        });
             });
 
             $('.delete-comment-btn').on('click', function (e) {
@@ -246,16 +241,16 @@
                 var t = $(this);
                 if(confirm("Are you sure to delete this comment ?")){
                     $.ajax({
-                        method: 'POST',
-                        url: "{{route('api-user-delete-comment')}}",
-                        data: 'comment_id='+t.attr('data-comment-id'),
-                    })
-                    .done(function (msg) {
-                        var res = msg;
-                        if(!res.error){
-                            t.closest('.comment-list').remove();
-                        }
-                    });
+                                method: 'POST',
+                                url: "{{route('api-user-delete-comment')}}",
+                                data: 'comment_id='+t.attr('data-comment-id'),
+                            })
+                            .done(function (msg) {
+                                var res = msg;
+                                if(!res.error){
+                                    t.closest('.comment-list').remove();
+                                }
+                            });
                 }
             });
 
@@ -279,17 +274,17 @@
                 if(confirm("Are you sure to change caption?"))
                 {
                     $.ajax({
-                        method: 'POST',
-                        url: "{{route('api-user-edit-caption')}}",
-                        data: $(this).serialize(),
-                    })
-                    .done(function (msg) {
-                        var res = msg;
-                        if(!res.error){
-                            temp_caption_element.closest('.panel-body').find('.status p').text(res.new_caption);
-                            $('.modal-ch-caption').modal('hide');
-                        }
-                    });
+                                method: 'POST',
+                                url: "{{route('api-user-edit-caption')}}",
+                                data: $(this).serialize(),
+                            })
+                            .done(function (msg) {
+                                var res = msg;
+                                if(!res.error){
+                                    temp_caption_element.closest('.panel-body').find('.status p').text(res.new_caption);
+                                    $('.modal-ch-caption').modal('hide');
+                                }
+                            });
                 }
             })
         });

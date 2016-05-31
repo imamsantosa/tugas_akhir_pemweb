@@ -9,7 +9,8 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="{{route('user-home')}}">RailPicture.com</a>
+
+                <a class="navbar-brand" href="{{(auth()->user()->is_admin)? route('admin-home') : route('user-home')}}">RailPicture.com</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -20,10 +21,21 @@
                     <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
                 </form>
                 <ul class="nav navbar-nav navbar-right">
-                    <li ><a href="{{route('user-home')}}">Home <span class="sr-only"></span></a></li>
+                    <li ><a href="{{(auth()->user()->is_admin)? route('admin-home') : route('user-home')}}">Home <span class="sr-only"></span></a></li>
                     <li ><a href="{{route('user-upload_image')}}">Upload <span class="sr-only"></span></a></li>
                     <li ><a href="{{route('user-message')}}">Messages <span class="sr-only"></span></a></li>
-
+                    @if(auth()->user()->is_admin)
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            Admin Control <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{route('admin-list-user')}}"><span class="glyphicon glyphicon-user"></span>  User List</a></li>
+                            <li><a href="{{route('admin-list-report')}}"><span class="glyphicon glyphicon-exclamation-sign"></span>  Report List</a></li>
+                            <li><a href="{{route('admin-broadcast')}}"><span class="glyphicon glyphicon-envelope"></span>  Broadcast Message to all users</a></li>
+                        </ul>
+                    </li>
+                    @endif
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="padding-top: 12px">
                             <img src="{{url('avatars/'.auth()->user()->avatar)}}" class="img-rounded" style="width: 36px; height:26px;"> {{auth()->user()->full_name}} <span class="caret"></span>

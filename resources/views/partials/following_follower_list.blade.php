@@ -14,7 +14,7 @@
                                     <div class="account-info">
                                         <img src="{{url($following['avatar'])}}" class="img-thumbnail image-info"/>
                                         <div class="identity-info">
-                                            <a href="{{route('user-profile', ['username' => $following['username']])}}" role="button"><h4 class="name-info">{{$following['full_name']}}</h4></a>
+                                            <a href="{{route('user-profile', ['username' => $following['username']])}}" role="button"><h4 class="name-info">{{$following['full_name']}} {!! ($following['is_admin'])? '<span style="font-size: 45%;" class="label label-primary">Admin</span>' : '' !!}</h4></a>
                                             <a href="{{route('user-profile', ['username' => $following['username']])}}" role="button"><h5 class="id-info">{{'@'.$following['username']}}</h5></a>
                                         </div>
                                     </div>
@@ -55,7 +55,7 @@
                                     <div class="account-info">
                                         <img src="{{url($follower['avatar'])}}" class="img-thumbnail image-info"/>
                                         <div class="identity-info">
-                                            <a href="{{route('user-profile', ['username' => $follower['username']])}}" role="button"><h4 class="name-info">{{$follower['full_name']}}</h4></a>
+                                            <a href="{{route('user-profile', ['username' => $follower['username']])}}" role="button"><h4 class="name-info">{{$follower['full_name']}} {!! ($follower['is_admin'])? '<span style="font-size: 45%;" class="label label-primary">Admin</span>' : '' !!}</h4></a>
                                             <a href="{{route('user-profile', ['username' => $follower['username']])}}" role="button"><h5 class="id-info">{{'@'.$follower['username']}}</h5></a>
                                         </div>
                                     </div>

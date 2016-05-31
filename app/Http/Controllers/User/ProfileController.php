@@ -66,7 +66,8 @@ class ProfileController extends Controller
                 'is_followed' => $d->user->isFollowed(),
                 'full_name' => $d->user->full_name,
                 'avatar' => '/avatars/'.$d->user->avatar,
-                'username' => $d->user->username
+                'username' => $d->user->username,
+                'is_admin' => $d->user->is_admin
             ];
         });
 
@@ -83,7 +84,9 @@ class ProfileController extends Controller
                 'is_followed' => $d->friend->isFollowed(),
                 'full_name' => $d->friend->full_name,
                 'avatar' => '/avatars/'.$d->friend->avatar,
-                'username' => $d->friend->username
+                'username' => $d->friend->username,
+                'is_admin' => $d->friend->is_admin
+
             ];
         });
 

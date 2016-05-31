@@ -24,11 +24,8 @@
                             <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                 <span class="glyphicon glyphicon-option-horizontal"></span> Options
                                 <ul class="dropdown-menu">
-                                    @if(auth()->user()->username == $post['username'])
-                                        <li><a role="button" class="remove-button"><span class="glyphicon glyphicon-remove"></span> Delete</a></li>
-                                        <li><a role="button" data-post-id="{{$post['post_id']}}" class="edit-caption-button"><span class="glyphicon glyphicon-pencil"></span> Edit Caption</a></li>
-
-                                    @endif
+                                    <li><a role="button" class="remove-button"><span class="glyphicon glyphicon-remove"></span> Delete</a></li>
+                                    <li><a role="button" data-post-id="{{$post['post_id']}}" class="edit-caption-button"><span class="glyphicon glyphicon-pencil"></span> Edit Caption</a></li>
                                     <li><a role="button" class="download-button" href="{{url('images/'.$post['post_id'].'.jpg')}}" download="{{md5(date('Y-m-d h:i:s').auth()->user()->username . $post['post_id']).'.jpg'}}"><span class="glyphicon glyphicon-download-alt"></span> Download</a></li>
                                 </ul>
                             </a>
@@ -64,9 +61,7 @@
                                                 <div class="comment-content">{{$comment['comment']}} </div>
                                             </div>
                                             <div class="col-xs-1">
-                                                @if($comment['username'] === auth()->user()->username )
-                                                    <a class="delete-comment-btn" data-comment-id="{{$comment['id']}}" role="button"><span class="glyphicon glyphicon-remove"></span></a>
-                                                @endif
+                                                <a class="delete-comment-btn" data-comment-id="{{$comment['id']}}" role="button"><span class="glyphicon glyphicon-remove"></span></a>
                                             </div>
                                         </div>
                                     </div>
@@ -192,16 +187,16 @@
                 if(post_id !== undefined){
                     if(confirm("Are you sure to delete this image ?")){
                         $.ajax({
-                            method: 'POST',
-                            url: "{{route('api-user-delete-post')}}",
-                            data: 'post_id='+post_id,
-                        })
-                        .done(function (msg) {
-                            var res = msg;
-                            if(!res.error){
-                                window.location = "{{route('user-home')}}"
-                            }
-                        });
+                                    method: 'POST',
+                                    url: "{{route('api-user-delete-post')}}",
+                                    data: 'post_id='+post_id,
+                                })
+                                .done(function (msg) {
+                                    var res = msg;
+                                    if(!res.error){
+                                        window.location = "{{route('user-home')}}"
+                                    }
+                                });
                     }
                 }
             });
@@ -220,17 +215,17 @@
             $('.form-report').on('submit', function (e) {
                 e.preventDefault();
                 $.ajax({
-                    method: 'POST',
-                    url: "{{route('api-user-send-report')}}",
-                    data: $(this).serialize(),
-                })
-                .done(function (msg) {
-                    var res = msg;
-                    if(!res.error){
-                        $('.form-report').hide();
-                        $('.info-report').show();
-                    }
-                });
+                            method: 'POST',
+                            url: "{{route('api-user-send-report')}}",
+                            data: $(this).serialize(),
+                        })
+                        .done(function (msg) {
+                            var res = msg;
+                            if(!res.error){
+                                $('.form-report').hide();
+                                $('.info-report').show();
+                            }
+                        });
             })
 
             $('.delete-comment-btn').on('click', function (e) {
@@ -238,16 +233,16 @@
                 var t = $(this);
                 if(confirm("Are you sure to delete this comment ?")){
                     $.ajax({
-                        method: 'POST',
-                        url: "{{route('api-user-delete-comment')}}",
-                        data: 'comment_id='+t.attr('data-comment-id'),
-                    })
-                    .done(function (msg) {
-                        var res = msg;
-                        if(!res.error){
-                            t.closest('.comment-list').remove();
-                        }
-                    });
+                                method: 'POST',
+                                url: "{{route('api-user-delete-comment')}}",
+                                data: 'comment_id='+t.attr('data-comment-id'),
+                            })
+                            .done(function (msg) {
+                                var res = msg;
+                                if(!res.error){
+                                    t.closest('.comment-list').remove();
+                                }
+                            });
                 }
             });
 

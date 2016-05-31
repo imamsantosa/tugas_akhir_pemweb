@@ -15,10 +15,16 @@ class Status
     {
         $admin = $this->isAdmin($request->route());
         $is_Admin = auth()->user()->is_admin;
+
         if ($admin)
         {
-            if(!$is_Admin)
-                return response()->json(['error' => true, 'message'=>'you not admin']);
+            if(!$is_Admin){
+                if ($request->ajax() || $request->wantsJson()) {
+                    return response()->json(['error' => true, 'message'=>'you not admin']);
+                } else {
+                    return redirect()->route('user-home');
+                }
+            }
         }
 
         return $next($request);

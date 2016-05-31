@@ -18,7 +18,7 @@
                 <div class="col-md-12">
                     <h3><span class="glyphicon glyphicon-envelope"></span> Direct Message</h3>
                     <hr>
-                    <ul class="message-list" >
+                    <ul class="message-list" style="overflow-y: scroll; max-height: 500px;">
                         @if(count($messages) != 0)
                             @foreach($messages as $message)
                             <li style="margin-bottom: 5px;">
@@ -28,7 +28,7 @@
                                             <div class="account-info">
                                                 <img style="padding: 0px; " src="{{url('avatars/'.$message['avatar'])}}" class="img-thumbnail image-info"/>
                                                 <div class="identity-info">
-                                                    <h4 class="name-info">{{$message['full_name']}}</h4>
+                                                    <h4 class="name-info">{{$message['full_name']}} {!! ($message['is_admin'])? '<span style="font-size: 45%;" class="label label-primary">Admin</span>' : '' !!}</h4>
                                                     <h5 class="id-info">{{'@'.$message['username']}}</h5>
                                                 </div>
                                                 <div class="message-last">
