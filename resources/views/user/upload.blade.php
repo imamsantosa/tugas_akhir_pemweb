@@ -13,8 +13,10 @@
     @endif
     <div class="panel panel-default">
         <div class="panel-body">
-            <div class="row-center">
+            <div class="row">
                 <div class="col-md-12">
+                    <h3> Upload Image</h3>
+                    <hr>
                     <form class="form-horizontal" action="{{route('user-upload_proses')}}" method="POST" enctype="multipart/form-data">
                         <div class="form-group">
                             <div class="col-sm-12">
@@ -36,7 +38,6 @@
                                 <input type="submit" class="form-control" value="Post" style="background-color: #5D5C5C;color: white;">
                             </div>
                         </div>
-                        </input>
                     </form>
                 </div>
             </div>

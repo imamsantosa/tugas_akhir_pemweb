@@ -6,11 +6,18 @@ a{
 	color: gray;
 }
 
-.btn-follow{
-	margin-right: 10px;
+.btn-grey:hover{
 	background-color: #5D5C5C;
-
 }
+
+.btn-follow:hover{
+	background-color: #656363;
+}
+
+.btn-unfollow:hover{
+	background-color: #D04848;
+}
+
 .f-btn{
 	width: 388px;
 	background-color: #5D5C5C;
@@ -111,6 +118,10 @@ a{
 	display: inline;
 }
 
+.comment-list:hover{
+	background-color: rgba(234, 234, 225, 0.49);
+}
+
 #overlayup {
     position: absolute;
     left: 0;
@@ -130,5 +141,91 @@ a{
 
 .login-screen {
 	margin-top: 15%;
+}
 
+.message-list {
+	padding-left: 0;
+	margin-bottom: 0;
+	list-style: none;
+}
+
+.message-list > li:hover{
+	background-color: #DEDADA;
+}
+
+.message-list > li{
+
+}
+
+.message-list > li > a{
+	text-decoration: none;
+}
+
+.message-item{
+	position: relative;
+	display: block;
+	padding: 10px 12px;
+}
+
+.readed{
+	background-color: rgb(234, 234, 225);
+}
+
+.list-btn-unfollow:hover {
+	background-color: #D04848;
+}
+
+.list-btn-unfollow:hover > span {
+	display: none;
+}
+
+.list-btn-unfollow:hover:after{
+	content: "Unfollow";
+}
+
+.image-profile{
+	height: 170px;
+	width: 220px;
+	margin-bottom: 25px;
+}
+
+.description-image-profil {
+	height: 170px;
+	width: 220px;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	background: rgba(119, 128, 134, 0.85);
+	color: #fff;
+	visibility: hidden;
+	opacity: 0;
+}
+
+.image-item:hover .description-image-profil {
+	visibility: visible;
+	opacity: 1;
+}
+
+.solved{
+	background-color: rgba(155, 255, 155, 0.49);
+}
+
+.solved:hover {
+	background-color: rgba(155, 255, 155, 0.85) !important;
+}
+
+.reject{
+	background-color: rgba(255, 192, 155, 0.49);
+}
+
+.reject:hover{
+	background-color: rgba(255, 192, 155, 0.68) !important;
+}
+
+.waiting{
+	background-color: rgba(255, 238, 155, 0.37);
+}
+
+.waiting:hover{
+	background-color: rgba(255, 238, 155, 0.65) !important;
 }

@@ -90,6 +90,7 @@ class CreateTables extends Migration
             $table->integer('sender_id')->unsigned();
             $table->integer('recipient_id')->unsigned();
             $table->text('message');
+            $table->boolean('is_read')->default(false);
             $table->timestamps();
 
             $table->foreign('sender_id')

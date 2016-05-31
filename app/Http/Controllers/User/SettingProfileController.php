@@ -9,9 +9,10 @@
 namespace App\Http\Controllers\User;
 
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class SettingProfileController
+class SettingProfileController extends Controller
 {
     public function index()
     {
@@ -25,7 +26,7 @@ class SettingProfileController
         $birthdate = $request->input('birthdate');
         $status_message = $request->input('status_message');
 
-        auth()->user()->update([
+        $update = auth()->user()->update([
             'email' => $email,
             'full_name' => $full_name,
             'birthdate' => $birthdate,

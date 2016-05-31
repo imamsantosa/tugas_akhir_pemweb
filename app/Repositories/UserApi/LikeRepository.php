@@ -34,8 +34,8 @@ class LikeRepository {
         ]);
         
         $post = $this->post->find($post_id);
-        $count = ($post->likeCount() <= 1) ? ' Star' : ' Stars';
-        return ['error' => false, 'message' => 'sukses menambahkan like', 'count_like' => $post->likeCount().$count];
+        $count = ($post->like->count() <= 1) ? ' Star' : ' Stars';
+        return ['error' => false, 'message' => 'sukses menambahkan like', 'count_like' => $post->like->count().$count];
     }
 
     public function unlike()
@@ -49,7 +49,7 @@ class LikeRepository {
         $liked->delete();
 
         $post = $this->post->find($post_id);
-        $count = ($post->likeCount() <= 1) ? ' Star' : ' Stars';
-        return ['error' => false, 'message' => 'sukses menghapus like', 'count_like' => $post->likeCount().$count];
+        $count = ($post->like->count() <= 1) ? ' Star' : ' Stars';
+        return ['error' => false, 'message' => 'sukses menghapus like', 'count_like' => $post->like->count().$count];
     }
 }

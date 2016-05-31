@@ -1,6 +1,8 @@
 @extends('layouts.user')
 
-@section('title') RailPicture.com @endsection
+@section('title')
+
+@endsection
 
 @section('content')
     @if(count($posts) != 0)
@@ -9,7 +11,9 @@
                 <div class="panel-body">
                     <div class="row" data-postId="{{$post['post_id']}}">
                         <div class="col-md-12 col-xs-12 text-center" id="image-post">
-                            <img src="{{url('images/'.$post['post_id'].'.jpg')}}" class="img-thumbnail">
+                            <a href="{{route('user-post-single', ['id'=> $post['post_id']])}}">
+                                <img src="{{url('images/'.$post['post_id'].'.jpg')}}" class="img-thumbnail">
+                            </a>
                         </div>
                         <div class="col-md-12 col-xs-12 action">
                             <div class="row text-center interaction">
@@ -26,8 +30,10 @@
                                         <ul class="dropdown-menu">
                                             @if(auth()->user()->username == $post['username'])
                                             <li><a role="button" class="remove-button"><span class="glyphicon glyphicon-remove"></span> Delete</a></li>
+                                            <li><a role="button" data-post-id="{{$post['post_id']}}" class="edit-caption-button"><span class="glyphicon glyphicon-pencil"></span> Edit Caption</a></li>
+
                                             @endif
-                                            <li><a role="button" class="download-button"><span class="glyphicon glyphicon-download-alt"></span> Download</a></li>
+                                            <li><a role="button" class="download-button" href="{{url('images/'.$post['post_id'].'.jpg')}}" download="{{md5(date('Y-m-d h:i:s').auth()->user()->username . $post['post_id']).'.jpg'}}"><span class="glyphicon glyphicon-download-alt"></span> Download</a></li>
                                         </ul>
                                     </a>
                                 </div>
@@ -44,22 +50,29 @@
                                 <div class="account-info">
                                     <img src="{{url('avatars/'.$post['avatar'])}}" class="img-thumbnail image-info"/>
                                     <div class="identity-info">
-                                        <h4 class="name-info"><a href="{{route('user-profile', ['username' => $post['username']])}}" role="button">{{$post['full_name']}}</a></h4>
+                                        <h4 class="name-info"><a href="{{route('user-profile', ['username' => $post['username']])}}" role="button">{{$post['full_name']}} {!! ($post['is_admin'])? '<span style="font-size: 45%;" class="label label-primary">Admin</span>' : '' !!}</a></h4>
                                         <h5 class="id-info"><a href="{{route('user-profile', ['username' => $post['username']])}}" role="button"> {{'@'.$post['username']}} </a></h5>
                                     </div>
                                 </div>
                                 <div class="status">
-                                    <p>
-                                        {{$post['caption']}}
-                                    </p>
+                                    <p>{{$post['caption']}}</p>
                                 </div>
                                 <hr>
-                                <div class="comment">
+                                <div class="comment row">
                                     @if(count($post['comments']) != 0)
                                     @foreach($post['comments'] as $comment)
-                                    <div class="comment-list">
-                                        <div class="comment-name"><a href="{{route('user-profile', ['username' => $post['username']])}}" role="button">{{'@'.$comment['full_name']}}</a> : </div>
-                                        <div class="comment-content">{{$comment['comment']}} </div>
+                                    <div class="comment-list col-xs-12">
+                                        <div class="row">
+                                            <div class="col-xs-11">
+                                                <div class="comment-name"><a href="{{route('user-profile', ['username' => $comment['username']])}}" role="button">{{'@'.$comment['username']}}</a> : </div>
+                                                <div class="comment-content">{{$comment['comment']}} </div>
+                                            </div>
+                                            <div class="col-xs-1">
+                                                @if($comment['username'] === auth()->user()->username )
+                                                <a class="delete-comment-btn" data-comment-id="{{$comment['id']}}" role="button"><span class="glyphicon glyphicon-remove"></span></a>
+                                                @endif
+                                            </div>
+                                        </div>
                                     </div>
                                     @endforeach
                                     @endif
@@ -160,11 +173,20 @@
             });
 
             function addComment(str){
-                var a = '<div class="comment-list">';
-                var b = '<div class="comment-name">';
-                var c = '<a href="u/'+str.username+'" role="button">@'+str.full_name+'</a> : </div>';
-                var d = '<div class="comment-content">'+str.comment+'</div>';
-                var e = '</div>';
+
+
+                var a = '<div class="comment-list col-xs-12">'+
+                            '<div class="row">'+
+                                '<div class="col-xs-11">'+
+                                    '<div class="comment-name">';
+                var b = '<a href="{{route('user-profile', '')}}/'+str.username+'" role="button">@'+str.username+'</a> : </div>';
+                var c = '<div class="comment-content">'+str.comment+'</div>';
+                var d = '</div>';
+                var e = '<div class="col-xs-1">'+
+                        '<a class="" role="button"><span class="glyphicon glyphicon-remove"></span></a>'+
+                        '</div>'+
+                        '</div>'+
+                        '</div>';
 
                 return a+b+c+d+e;
             }
@@ -192,6 +214,127 @@
                 }
             });
 
+            $('.report-button').on('click', function(event){
+                var element = event.target.parentNode.parentNode.parentNode.parentNode;
+                var post_id = element.dataset['postid'];
+
+                console.log(element);
+                if(post_id !== undefined){
+                    $('.report_post_id').val(post_id);
+                    $('.modal-report').modal('show');
+                }
+            });
+
+            $('.form-report').on('submit', function (e) {
+                e.preventDefault();
+                $.ajax({
+                    method: 'POST',
+                    url: "{{route('api-user-send-report')}}",
+                    data: $(this).serialize(),
+                })
+                .done(function (msg) {
+                    var res = msg;
+                    if(!res.error){
+                        $('.form-report').hide();
+                        $('.info-report').show();
+                    }
+                });
+            });
+
+            $('.delete-comment-btn').on('click', function (e) {
+                e.preventDefault();
+                var t = $(this);
+                if(confirm("Are you sure to delete this comment ?")){
+                    $.ajax({
+                        method: 'POST',
+                        url: "{{route('api-user-delete-comment')}}",
+                        data: 'comment_id='+t.attr('data-comment-id'),
+                    })
+                    .done(function (msg) {
+                        var res = msg;
+                        if(!res.error){
+                            t.closest('.comment-list').remove();
+                        }
+                    });
+                }
+            });
+
+            $('.edit-caption-button').on('click', function (e) {
+                e.preventDefault();
+                var t = $(this);
+                setTempCaptionElement(t);
+                var old_caption = t.closest('.panel-body').find('.status p').text();
+                $('.modal-ch-caption').find('.caption').val(old_caption);
+                $('.modal-ch-caption').find('.post-id').val(t.attr('data-post-id'));
+                $('.modal-ch-caption').modal('show');
+            });
+
+            var temp_caption_element;
+            function setTempCaptionElement(element) {
+                temp_caption_element = element;
+            }
+
+            $('.form-ch-caption').on('submit', function (e) {
+                e.preventDefault();
+                if(confirm("Are you sure to change caption?"))
+                {
+                    $.ajax({
+                        method: 'POST',
+                        url: "{{route('api-user-edit-caption')}}",
+                        data: $(this).serialize(),
+                    })
+                    .done(function (msg) {
+                        var res = msg;
+                        if(!res.error){
+                            temp_caption_element.closest('.panel-body').find('.status p').text(res.new_caption);
+                            $('.modal-ch-caption').modal('hide');
+                        }
+                    });
+                }
+            })
         });
     </script>
+
+    <div class="modal fade modal-report" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+        <div class="modal-dialog modal-md" style="margin: 190px auto;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Report Post</h4>
+                </div>
+                <form action="" method="POST" class="form-report">
+                    <div class="modal-body">
+                        <input type="hidden" value="" name="report_post_id" class="report_post_id">
+                        <textarea class="form-control" placeholder="Reason..." rows="5" name="report_reason" required="required`    "></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" class="btn btn-primary submt-btn" value="Send">
+                    </div>
+                </form>
+                <div class="modal-body info-report" style="display: none;">
+                    <div class="alert alert-success" >Sukses to report image. Thanks for contribute!!!</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade modal-ch-caption" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+        <div class="modal-dialog modal-md" style="margin: 190px auto;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Edit Caption</h4>
+                </div>
+                <form action="" method="POST" class="form-ch-caption">
+                    <div class="modal-body">
+                        <input type="hidden" value="" name="post_id" class="post-id">
+                        <input type="text" value="" name="caption" class="form-control caption" placeholder="write caption..." required="required">
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" class="btn btn-primary submt-btn" value="Edit">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 @endsection

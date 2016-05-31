@@ -24,4 +24,9 @@ class PostController extends BaseController
     {
         return $this->respond($this->repository->delete());
     }
+
+    public function editCaption()
+    {
+        return $this->respond($this->repository->editCaption());
+    }
 }

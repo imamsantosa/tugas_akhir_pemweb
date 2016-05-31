@@ -39,14 +39,21 @@ class AuthController extends Controller {
             'password' => $request->input('password')
         ];
 
-        if(auth()->attempt($auth)) return redirect()->route('user-home');
+        if(!auth()->attempt($auth)){
+            return redirect()->route('login')
+                ->with([
+                    'status' => 'danger',
+                    'title' => 'Error Login !!',
+                    'message' => 'Username or Password invalid'
+                ]);
+        }
 
-        return redirect()->route('login')
-            ->with([
-                'status' => 'danger',
-                'title' => 'Error Login !!',
-                'message' => 'Username or Password invalid'
-            ]);
+        if(!auth()->user()->is_admin)
+            return redirect()->route('user-home');
+
+        return redirect()->route('admin-home');
+
+
     }
 
     public function logout()
