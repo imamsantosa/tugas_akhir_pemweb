@@ -23,7 +23,6 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li ><a href="{{(auth()->user()->is_admin)? route('admin-home') : route('user-home')}}">Home <span class="sr-only"></span></a></li>
                     <li ><a href="{{route('user-upload_image')}}">Upload <span class="sr-only"></span></a></li>
-                    <li ><a href="{{route('user-message')}}">Messages <span class="sr-only"></span></a></li>
                     @if(auth()->user()->is_admin)
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -32,7 +31,6 @@
                         <ul class="dropdown-menu">
                             <li><a href="{{route('admin-list-user')}}"><span class="glyphicon glyphicon-user"></span>  User List</a></li>
                             <li><a href="{{route('admin-list-report')}}"><span class="glyphicon glyphicon-exclamation-sign"></span>  Report List</a></li>
-                            <li><a href="{{route('admin-broadcast')}}"><span class="glyphicon glyphicon-envelope"></span>  Broadcast Message to all users</a></li>
                         </ul>
                     </li>
                     @endif

@@ -32,17 +32,14 @@
                 </div>
             </div>
             <div class="row" style="margin-top: 12px">
-                <div class="col-md-3 col-xs-3">
+                <div class="col-md-4 col-xs-4">
                     <a role="button" class="btn btn-primary btn-grey btn-block">{{ $data['post_count'] }} Posts</a>
                 </div>
-                <div class="col-md-3 col-xs-3">
+                <div class="col-md-4 col-xs-4">
                     <a role="button" id="button-following" class="btn btn-primary btn-grey btn-block following-btn">{{ $data['following_count'] }} Following</a>
                 </div>
-                <div class="col-md-3 col-xs-3">
+                <div class="col-md-4 col-xs-4">
                     <a role="button" id="button-follower" class="btn btn-primary btn-grey btn-block follower-btn">{{ $data['follower_count'] }} Follower{{($data['follower_count'] >= 2)? 's':''}}</a>
-                </div>
-                <div class="col-md-3 col-xs-3">
-                    <a role="button" id="button-follower" href="{{route('user-conversation', ['id' => $data['identity']->id])}}" class="btn btn-primary btn-grey btn-block">Send Message</a>
                 </div>
             </div>
             <div class="row" style="margin-top: 10px;">

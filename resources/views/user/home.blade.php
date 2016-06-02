@@ -33,7 +33,6 @@
                                             <li><a role="button" data-post-id="{{$post['post_id']}}" class="edit-caption-button"><span class="glyphicon glyphicon-pencil"></span> Edit Caption</a></li>
 
                                             @endif
-                                            <li><a role="button" class="download-button" href="{{url('images/'.$post['post_id'].'.jpg')}}" download="{{md5(date('Y-m-d h:i:s').auth()->user()->username . $post['post_id']).'.jpg'}}"><span class="glyphicon glyphicon-download-alt"></span> Download</a></li>
                                         </ul>
                                     </a>
                                 </div>
